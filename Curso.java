@@ -1,30 +1,31 @@
+
 import java.util.ArrayList;
+
 /**
  * Clase donde se describe los datos del Curso impartido en el TEC
  * @author Fabian Rojas, Geancarlo Oviedo, Jeison Blanco
  */
-public class Curso {
-    private String codigo;
-    private String nombre;
-    private byte creditos;
-    private byte cantidadHoras;
-    private ArrayList<Curso> requisitos;
-    private ArrayList<Curso> correquisitos;
-    private float calificacion;
-    private String RN;
+public abstract class Curso {
+    protected String codigo;
+    protected String nombre;
+    protected byte[] creditos;
+    protected byte[] cantidadHoras;
+    protected ArrayList<Curso> requisitos;
+    protected ArrayList<Curso> correquisitos;
+    // protected float calificacion;
+    // protected String RN;
 
     //Metodo constructor de la clase curso
-    public Curso(String codigo,String nombre,byte creditos,byte cantidadHoras, float calificacion, String RN){
+    public Curso(String codigo,String nombre,byte[] creditos,byte[] cantidadHoras/*, float calificacion, String RN*/){
         this.codigo=codigo;
         this.nombre=nombre;
         this.creditos=creditos;
         this.cantidadHoras=cantidadHoras;
         this.requisitos=new ArrayList<Curso>();
         this.correquisitos=new ArrayList<Curso>();
-        this.calificacion=calificacion;
-        this.RN=RN;
+        // this.calificacion=calificacion;
+        // this.RN=RN;
     }
-
     //Metodos Sets
     public void setCodigo(String codigo) {
         this.codigo = codigo;
@@ -32,10 +33,10 @@ public class Curso {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public void setCreditos(byte creditos) {
+    public void setCreditos(byte[] creditos) {
         this.creditos = creditos;
     }
-    public void setCantidadHoras(byte cantidadHoras) {
+    public void setCantidadHoras(byte[] cantidadHoras) {
         this.cantidadHoras = cantidadHoras;
     }
     public void setRequisitos (Curso curso){
@@ -58,10 +59,10 @@ public class Curso {
     public String getNombre() {
         return nombre;
     }
-    public byte getCreditos() {
+    public byte[] getCreditos() {
         return creditos;
     }
-    public byte getCantidadHoras() {
+    public byte[] getCantidadHoras() {
         return cantidadHoras;
     }
     public ArrayList<Curso> getRequisitos() {
@@ -76,4 +77,7 @@ public class Curso {
     public String getRN() {
         return RN;
     }
+
 }
+
+

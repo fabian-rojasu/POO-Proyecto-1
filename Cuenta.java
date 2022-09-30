@@ -2,25 +2,28 @@
  * Clase donde se describe los datos que tendran los perfiles de Profesor y Coordinador
  * @author Fabian Rojas, Geancarlo Oviedo, Jeison Blanco
  */
-public class Cuenta {
+public abstract class Cuenta {
     protected String nombre;
     protected String apellido1;
     protected String apellido2;
-    protected String[] telefonos;
+    protected String[] telefonos = new String[2]; 
     protected String correo;
     protected String usuario;
     protected String contrasena;
     
     //Metodo constructor de la clase cuenta
-    public Cuenta(String nombre,String apellido1,String apellido2,String telefono,String correo,String usuario,String contrasena){
+    public Cuenta(String nombre,String apellido1,String apellido2,String telefono1,String telefono2,String correo,String usuario,String contrasena){
         this.nombre=nombre;
         this.apellido1=apellido1;
         this.apellido2=apellido2;
-        this.telefonos[0]=telefono;
+        this.telefonos[0]=telefono1;
+        this.telefonos[1]=telefono2;
         this.correo=correo;
         this.usuario=usuario;
         this.contrasena=contrasena;
     }
+
+
 
     //Metodos Sets
     public void setNombre(String nombre) {

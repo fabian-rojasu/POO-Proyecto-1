@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 /**
  * Clase donde se describe los datos del estudiante TEC
@@ -9,12 +10,14 @@ public class Estudiante {
     private String apellido2;
     private int carnet;
     private Calendar fechaNacimiento;
-    private byte edad;
+    private byte[] edad;
     private String genero;
     private String residencia;
+    
+    private ArrayList<Grupo> listaGrupos;
 
     //Metodo constructor de la clase estudiante
-    public Estudiante(String nombre,String apellido1,String apellido2,int carnet,Calendar fechaNacimiento,byte edad,String genero,String residencia){
+    public Estudiante(String nombre,String apellido1,String apellido2,int carnet,Calendar fechaNacimiento,byte[] edad,String genero,String residencia){
         this.nombre=nombre;
         this.apellido1=apellido1;
         this.apellido2=apellido2;
@@ -41,7 +44,7 @@ public class Estudiante {
     public void ModificarFechaNacimiento(Calendar fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-    public void setEdad(byte edad) {
+    public void setEdad(byte[] edad) {
         this.edad = edad;
     }
     public void setGenero(String genero) {
@@ -67,7 +70,7 @@ public class Estudiante {
     public Calendar getFechaNacimiento() {
         return fechaNacimiento;
     }
-    public byte getEdad() {
+    public byte[] getEdad() {
         return edad;
     }
     public String getGenero() {
@@ -75,6 +78,11 @@ public class Estudiante {
     }
     public String getResidencia() {
         return residencia;
+    }
+
+    //Otros Metodos
+    public void setListaGrupos(Grupo grupo) {
+        this.listaGrupos.add(grupo);
     }
 
 }
