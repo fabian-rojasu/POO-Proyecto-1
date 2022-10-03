@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-
 import java.util.GregorianCalendar;
-import java.util.Calendar;
 import java.io.Console;
 
 public class Main{
@@ -13,20 +11,22 @@ public class Main{
     static ArrayList<Profesor> profesores = new ArrayList<>();
     static ArrayList<Acompañamiento> acompañamientos = new ArrayList<>();
     static boolean ingreso;
+    static Console console = System.console();
+
     public static void main(String[] args) {
         coordinadores.add(new Coordinador("Jeison", "blanco", "rojas", "8128314","", "", "admin", "admin"));
         profesores.add(new Profesor("Leo", "Viquez", "puto", "84474019", "", "", "prof", "prof"));
         estudiantes.add(new Estudiante("Geancarlo", "Oviedo", "Vargas", 2022412243,new GregorianCalendar(2002,4,24), null, "Hombre", "Ciudad Quesada"));
-        gruposP.add(new Presencial("2a", "asdada", "Intro", null, null, 51, profesores.get(0), "B-3", "7:00", "11:00"));
-        gruposVS.add(new VirtualS("5a", "asdada", "Intro", null, null, 50, profesores.get(0), "Zoom", "7:00", "11:00"));
-        gruposVA.add(new VirtualA("a", "a", "Taller", null, null, 70, profesores.get(0), "Teams"));
+        gruposP.add(new Presencial("2a", "asdada", "Intro", Byte.parseByte("1"), Byte.parseByte("1"), 51, profesores.get(0), "B-3", "7:00", "11:00"));
+        gruposVS.add(new VirtualS("5a", "asdada", "Intro", Byte.parseByte("1"), Byte.parseByte("1"), 50, profesores.get(0), "Zoom", "7:00", "11:00"));
+        gruposVA.add(new VirtualA("a", "a", "Taller", Byte.parseByte("1"), Byte.parseByte("1"), 70, profesores.get(0), "Teams"));
         menu();
     }
     
     private static boolean loginCoordinador(){
         int cont = 0;
         Ansi.limpiarPantalla();
-        Console console = System.console();
+        
         String usuario = console.readLine("%s", "username: ");
         String contrasena = console.readLine("%s", "password: ");
         while(cont < coordinadores.size()){
@@ -41,7 +41,7 @@ public class Main{
     private static boolean loginProfesor(){
         int cont = 0;
         Ansi.limpiarPantalla();
-        Console console = System.console();
+        
         String usuario = console.readLine("%s", "username: ");
         String contrasena = console.readLine("%s", "password: ");
         while(cont < coordinadores.size()){
@@ -58,11 +58,12 @@ public class Main{
         Ansi.limpiarPantalla();
         System.out.println("1.Crear Tutorias");
         System.out.println("2.Agregar Estudiante a Tutoria");
-        Console console = System.console();
+        
         String opt =console.readLine("%s", "Seleccione alguna de las opciones: ");
         switch(opt)
         {
             case "1":
+                profeActual.CrearTutorias();
                 break;
             case "2":
                 profeActual.MenuAsistenciaTutorias();
@@ -70,19 +71,14 @@ public class Main{
 
     }
 
-    public static void MenuAcompañamientos(){
-        Console console = System.console();
-        
-       
-        
-    }
     
     public static void MenuProfesor()
     {
         Ansi.limpiarPantalla();
         System.out.println("1.Tutorias");
         System.out.println("2.Crear acompañamiento");
-        Console console = System.console();
+        System.out.println("2.Crear Calificacion");
+        
         String opt =console.readLine("%s", "Seleccione alguna de las opciones: ");
         switch(opt){
             case"1":
@@ -90,6 +86,9 @@ public class Main{
                 break;
             case"2":
                 acompañamientos.add(Profesor.crearAcompañamiento());
+                break;
+            case"3":
+                
                 break;
         }
 
@@ -103,7 +102,7 @@ public class Main{
         System.out.println("4.Crear Grupo");
         System.out.println("5.Matricular estudiante");
         System.out.println("6.Salir");
-        Console console = System.console();
+        
         String opt = console.readLine("%s", "Seleccione alguna de las opciones: ");
         switch(opt){
 
@@ -144,7 +143,7 @@ public class Main{
 
     private static void CrearCoordinador(){
         Ansi.limpiarPantalla();
-        Console console = System.console();
+        
         String nombre = console.readLine("%s", "nombre: ");
         String ap1 = console.readLine("%s", "Primer Apellido: ");
         String ap2 = console.readLine("%s", "Segundo Apellido: ");
@@ -164,7 +163,7 @@ public class Main{
         System.out.println("1.Iniciar sesion coordinador");
         System.out.println("2.Iniciar sesion profesor");
         System.out.println("3.Salir");
-        Console console = System.console();
+        
         String opt = console.readLine("%s", "Seleccione alguna de las opciones: ");
         switch(opt) 
         {

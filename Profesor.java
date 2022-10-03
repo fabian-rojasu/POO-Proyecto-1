@@ -27,6 +27,49 @@ public class Profesor extends Cuenta {
     public ArrayList<VirtualS> getGruposVS() {
         return gruposVS;
     }
+    public ArrayList<Tutoria> getTutorias() {
+        return tutorias;
+    }
+
+    public static Presencial buscarGrupoP(String id)
+    {
+        for (Presencial grup: Main.gruposP)
+        {
+            if (grup.getCodigo() == id)
+            {
+                
+                return (grup);
+            }
+        }
+        return null;
+
+    }
+    public static VirtualA buscarGrupoVA(String id)
+    {
+        for (VirtualA grup: Main.gruposVA)
+        {
+            if (grup.getCodigo() == id)
+            {
+                
+                return (grup);
+            }
+        }
+        return null;
+
+    }
+    public static VirtualS buscarGrupoVS(String id)
+    {
+        for (VirtualS grup: Main.gruposVS)
+        {
+            if (grup.getCodigo() == id)
+            {
+                
+                return (grup);
+            }
+        }
+        return null;
+
+    }
     
     public static Acompañamiento crearAcompañamiento(){
         Console console = System.console();
@@ -42,6 +85,22 @@ public class Profesor extends Cuenta {
         return new Acompañamiento(tipoRep, fech, descrip, est);
     }
 
+    public static Calificacion crearCalificacion(){
+        
+        float nota = Float.parseFloat(console.readLine("%s","Ingrese"))
+        
+        return ;
+    }
+
+
+    public void CrearTutorias(){
+        String nom =Main.console.readLine("%s", "Nombre de la tutoria: ");
+        String horio =Main.console.readLine("%s", "Horario: ");
+        this.tutorias.add(new Tutoria(nom, horio));
+        
+    }
+
+
     public void MenuAsistenciaTutorias(){
         Console console = System.console();
         System.out.println("1.Grupos de tutorias: ");
@@ -56,14 +115,21 @@ public class Profesor extends Cuenta {
             }
         
         }
-        System.out.println((contGrupos+1)+".volver");
+        System.out.println((contP+1)+".volver");
         int opt =Integer.parseInt(console.readLine("%s","opcion: "));
         if(opt == (contP+1)){
             return;
         }else{
             int carnet = Integer.parseInt(console.readLine("%s","Carnet del estudiante: "));
-        }
-
+            Estudiante est = Coordinador.buscarEstudiante(carnet);
+            if (est == null){
+                System.out.println("No se encontro el estudiante ");
+            }
+            else{
+                Main.profeActual.getTutorias().get(opt).agregarAsistencia(est);
+            }
+            
+        } 
     }
     // public void agregarAsistencia(Estudiante est, Tutoria lista) {
     //     lista.getAsistencia.add(est);

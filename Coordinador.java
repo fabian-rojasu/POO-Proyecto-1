@@ -170,12 +170,12 @@ public class Coordinador extends Cuenta {
                 break;
             case "3":
                 String cred=console.readLine("%s","Creditos nuevos");
-                byte[] creditos = cred.getBytes();
+                byte creditos = Byte.parseByte(cred);
                 curso.creditos=creditos;
                 break;
             case "4":
                 String ch=console.readLine("%s","Creditos nuevos");
-                byte[] cantidadHoras = ch.getBytes();
+                byte cantidadHoras = Byte.parseByte(ch);
                 curso.cantidadHoras=cantidadHoras;
                 break;
             case "5":
@@ -268,11 +268,9 @@ public class Coordinador extends Cuenta {
         Console console = System.console();
         String id = console.readLine("%s", "id: ");
         String nombre = console.readLine("%s", "Nombre: ");
-        String cred = console.readLine("%s", "Creditos: ");
-        byte[] creditos = cred.getBytes();
+        byte creditos = Byte.parseByte(console.readLine("%s", "Creditos: "));
         String codigo = console.readLine("%s", "Codigo: ");
-        String cantH = console.readLine("%s", "Horas: ");
-        byte[] cantidadHoras = cantH.getBytes();
+        byte cantidadHoras = Byte.parseByte(console.readLine("%s", "Horas: "));
         int numGrupo = Integer.parseInt((console.readLine("%s", "Numero de grupo: ")));
         String medio = console.readLine("%s", "Medio: ");
         Ansi.limpiarPantalla();
@@ -294,10 +292,10 @@ public class Coordinador extends Cuenta {
         String id = console.readLine("%s", "id: ");
         String nombre = console.readLine("%s", "Nombre: ");
         String cred = console.readLine("%s", "Creditos: ");
-        byte[] creditos = cred.getBytes();
+        byte creditos = Byte.parseByte(cred);
         String codigo = console.readLine("%s", "Codigo: ");
         String cantH = console.readLine("%s", "Horas: ");
-        byte[] cantidadHoras = cantH.getBytes();
+        byte cantidadHoras = Byte.parseByte(cantH);
         int numGrupo = Integer.parseInt((console.readLine("%s", "Numero de grupo: ")));
         String medio = console.readLine("%s", "Medio: ");
         String horaInicio = console.readLine("%s", "Hora de inicio: ");
@@ -319,10 +317,10 @@ public class Coordinador extends Cuenta {
         String id = console.readLine("%s", "id: ");
         String nombre = console.readLine("%s", "Nombre: ");
         String cred = console.readLine("%s", "Creditos: ");
-        byte[] creditos = cred.getBytes();
+        byte creditos = Byte.parseByte(cred);
         String codigo = console.readLine("%s", "Codigo: ");
         String cantH = console.readLine("%s", "Horas: ");
-        byte[] cantidadHoras = cantH.getBytes();
+        byte cantidadHoras = Byte.parseByte(cantH);
         int numGrupo = Integer.parseInt((console.readLine("%s", "Numero de grupo: ")));
         String aula = console.readLine("%s", "Aula: ");
         String horaInicio = console.readLine("%s", "Hora de inicio: ");
