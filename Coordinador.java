@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 
 public class Coordinador extends Cuenta {
+    static ArrayList<String> listaId;
     
     public Coordinador(String nombre,String apellido1,String apellido2,String telefono1,String telefono2,String correo,String usuario,String contrasena){
 
@@ -48,57 +49,61 @@ public class Coordinador extends Cuenta {
         return null;
 
     }
-    // funcion para asociar un estudiante a un grupo de curso
-     public static void asociarEst()
-    {
-        ArrayList<String> listaId = new ArrayList<>();
-        Ansi.limpiarPantalla();
-        Console console = System.console();
-        Estudiante est = buscarEstudiante(Integer.parseInt(console.readLine("%s", "Ingrese el carnet del estudiante: ")));
+    static int contGrupos = 0;
+    public static void ImprimirCursos(ArrayList<Presencial> gruposP,ArrayList<VirtualS> gruposVS,ArrayList<VirtualA> gruposVA){
+        contGrupos = 0;
         System.out.println("Grupos disponibles");
         int contP = 0;
-        int contGrupos = 0;
         System.out.println("Presencial: ");
-        if(Main.gruposP.size() == 0){
+        if(gruposP.size() == 0){
             System.out.println("------------------");
         }
         else{
-            while(contP < Main.gruposP.size()){
-                System.out.println((contGrupos+1)+"."+Main.gruposP.get(contP).nombre + Main.gruposP.get(contP).numGrupo);
-                listaId.add(Main.gruposP.get(contP).id);
+            while(contP < gruposP.size()){
+                System.out.println((contGrupos+1)+"."+"Nombre: "+gruposP.get(contP).nombre + "Grupo#" + gruposP.get(contP).numGrupo);
+                listaId.add(gruposP.get(contP).id);
                 contGrupos++;
                 contP++;
             }
         }
         contP = 0;
         System.out.println("Virtual Asincronico: ");
-        if(Main.gruposVA.size() == 0){
+        if(gruposVA.size() == 0){
             System.out.println("------------------");
         }else{
             while(contP < Main.gruposVA.size()){
-                System.out.println((contGrupos+1)+"."+Main.gruposVA.get(contP).nombre + Main.gruposVA.get(contP).numGrupo);
-                listaId.add(Main.gruposVA.get(contP).id);
+                System.out.println((contGrupos+1)+"."+"Nombre: "+gruposVA.get(contP).nombre + "Grupo#"+ gruposVA.get(contP).numGrupo);
+                listaId.add(gruposVA.get(contP).id);
                 contGrupos++;
                 contP++;
             } 
         }
         contP = 0;
         System.out.println("Virtual Sincronico: ");
-        if(Main.gruposVS.size() == 0){
+        if(gruposVS.size() == 0){
             System.out.println("------------------");
         }else{
-            while(contP < Main.gruposVS.size()){
-                System.out.println((contGrupos+1)+"."+Main.gruposVS.get(contP).nombre + Main.gruposVS.get(contP).numGrupo);
-                listaId.add(Main.gruposVS.get(contP).id);
+            while(contP < gruposVS.size()){
+                System.out.println((contGrupos+1)+"."+"Nombre: " + gruposVS.get(contP).nombre + "Grupo#"+ gruposVS.get(contP).numGrupo);
+                listaId.add(gruposVS.get(contP).id);
                 contGrupos++;
                 contP++;
             }
         }
         System.out.println((contGrupos+1)+".volver");
+    }
+    // funcion para asociar un estudiante a un grupo de curso
+     public static void asociarEst()
+    {   
+        listaId = new ArrayList<>();
+        Ansi.limpiarPantalla();
+        Console console = System.console();
+        Estudiante est = buscarEstudiante(Integer.parseInt(console.readLine("%s", "Ingrese el carnet del estudiante: ")));
+        ImprimirCursos(Main.gruposP, Main.gruposVS, Main.gruposVA);
         int opt =Integer.parseInt(console.readLine("%s","opcion: "));
         int opt2 = opt;
         if(opt == (contGrupos+1)){
-           return;
+            return;
         }
         if(opt2 <= Main.gruposP.size()){
             int cont =0;

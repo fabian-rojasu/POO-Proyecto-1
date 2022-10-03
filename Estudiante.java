@@ -17,7 +17,7 @@ public class Estudiante {
     private ArrayList<VirtualA> gruposVA ;
     private ArrayList<VirtualS> gruposVS ;
     private ArrayList<Presencial> gruposP ;
-
+    private ArrayList<Tutoria> tutorias;
     private ArrayList<Tramites> tramites;
 
     //Metodo constructor de la clase estudiante
@@ -33,6 +33,8 @@ public class Estudiante {
         gruposVA = new ArrayList<>();
         gruposVS = new ArrayList<>();
         gruposP = new ArrayList<>();
+        tutorias = new ArrayList<>();
+        tramites = new ArrayList<>();
 
     }
 
@@ -113,5 +115,8 @@ public class Estudiante {
     public void setTramites(Tramites tramites) {
         this.tramites.add(tramites);
     }
-
+    public void setTutorias(Tutoria tutoria) {
+        this.tutorias.add(tutoria);
+    }
+    
 }

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import java.util.GregorianCalendar;
+import java.util.Calendar;
 import java.io.Console;
 
 public class Main{
@@ -10,7 +11,7 @@ public class Main{
     static ArrayList<VirtualS> gruposVS = new ArrayList<>();
     static ArrayList<Presencial> gruposP = new ArrayList<>();
     static ArrayList<Profesor> profesores = new ArrayList<>();
-    static ArrayList<Tutoria> tutorias = new ArrayList<>();
+    static ArrayList<Acompañamiento> acompañamientos = new ArrayList<>();
     static boolean ingreso;
     public static void main(String[] args) {
         coordinadores.add(new Coordinador("Jeison", "blanco", "rojas", "8128314","", "", "admin", "admin"));
@@ -36,7 +37,7 @@ public class Main{
         }
         return false;
     }
-
+    static Profesor profeActual;
     private static boolean loginProfesor(){
         int cont = 0;
         Ansi.limpiarPantalla();
@@ -45,6 +46,7 @@ public class Main{
         String contrasena = console.readLine("%s", "password: ");
         while(cont < coordinadores.size()){
             if((usuario.equals(profesores.get(cont).usuario)  ) & (contrasena.equals(profesores.get(cont).contrasena))){
+                profeActual= profesores.get(cont);
                 return true;
             }
             cont++;
@@ -52,12 +54,47 @@ public class Main{
         return false;
     }
 
+    public static void MenuTutorias(){
+        Ansi.limpiarPantalla();
+        System.out.println("1.Crear Tutorias");
+        System.out.println("2.Agregar Estudiante a Tutoria");
+        Console console = System.console();
+        String opt =console.readLine("%s", "Seleccione alguna de las opciones: ");
+        switch(opt)
+        {
+            case "1":
+                break;
+            case "2":
+                profeActual.MenuAsistenciaTutorias();
+        }
 
-   /* private static void CrearGrupo(){
-       Ansi.limpiarPantalla();
+    }
 
-    }*/
+    public static void MenuAcompañamientos(){
+        Console console = System.console();
+        
+       
+        
+    }
+    
+    public static void MenuProfesor()
+    {
+        Ansi.limpiarPantalla();
+        System.out.println("1.Tutorias");
+        System.out.println("2.Crear acompañamiento");
+        Console console = System.console();
+        String opt =console.readLine("%s", "Seleccione alguna de las opciones: ");
+        switch(opt){
+            case"1":
+                MenuTutorias();
+                break;
+            case"2":
+                acompañamientos.add(Profesor.crearAcompañamiento());
+                break;
+        }
 
+    }
+    
     public static void MenuCoordinador(){
         Ansi.limpiarPantalla();
         System.out.println("1.Crear Coordinador");
@@ -171,7 +208,7 @@ public class Main{
                         menu();
                     }else{
                         System.out.println("Profesor existe");
-                        menu();
+                        MenuProfesor();
                     }
                 } 
                 break;

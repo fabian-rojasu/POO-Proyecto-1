@@ -8,10 +8,10 @@ public class Calificacion{
     private ArrayList<VirtualA> grupoVA;
     private ArrayList<VirtualS> grupoVS;
     private ArrayList<Presencial> grupoP;
-    public Calificacion(float nota, Estudiante estudiante, int RN){
+    public Calificacion(float nota, Estudiante estudiante){
         this.nota=nota;
         this.estudiante=estudiante;
-        this.RN=RN;
+        
         
        
     }
