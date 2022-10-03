@@ -73,3 +73,14 @@ class SoliBeca extends Tramites {
         this.periodo = periodo;
     }
 }
+
+class Acompañamiento extends Tramites {
+    private String tipoReporte;
+
+    public Acompañamiento( String tipoReporte,Calendar fecha,String descripcion, Estudiante est){
+        super(fecha,descripcion,est);
+        this.tipoReporte=tipoReporte;
+   }
+   
+
+}

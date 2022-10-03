@@ -14,7 +14,11 @@ public class Estudiante {
     private String genero;
     private String residencia;
     
-    private ArrayList<Grupo> listaGrupos;
+    private ArrayList<VirtualA> gruposVA ;
+    private ArrayList<VirtualS> gruposVS ;
+    private ArrayList<Presencial> gruposP ;
+
+    private ArrayList<Tramites> tramites;
 
     //Metodo constructor de la clase estudiante
     public Estudiante(String nombre,String apellido1,String apellido2,int carnet,Calendar fechaNacimiento,byte[] edad,String genero,String residencia){
@@ -26,6 +30,10 @@ public class Estudiante {
         this.edad=edad;
         this.genero=genero;
         this.residencia=residencia;
+        gruposVA = new ArrayList<>();
+        gruposVS = new ArrayList<>();
+        gruposP = new ArrayList<>();
+
     }
 
     //Metodos Sets
@@ -79,10 +87,31 @@ public class Estudiante {
     public String getResidencia() {
         return residencia;
     }
+    public ArrayList<Presencial> getGruposP() {
+        return gruposP;
+    }
+    public ArrayList<VirtualA> getGruposVA() {
+        return gruposVA;
+    }
+    public ArrayList<VirtualS> getGruposVS() {
+        return gruposVS;
+    }
+    public ArrayList<Tramites> getTramites() {
+        return tramites;
+    }
 
-    //Otros Metodos
-    public void setListaGrupos(Grupo grupo) {
-        this.listaGrupos.add(grupo);
+    // Metodos de agragar en las listas
+   public void setListaGruposP(Presencial grupo) {
+        this.gruposP.add(grupo);
+    }
+    public void setListaGruposVA(VirtualA grupo) {
+        this.gruposVA.add(grupo);
+    }
+    public void setListaGruposVS(VirtualS grupo) {
+        this.gruposVS.add(grupo);
+    }
+    public void setTramites(Tramites tramites) {
+        this.tramites.add(tramites);
     }
 
 }

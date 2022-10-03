@@ -5,79 +5,16 @@ import java.util.Calendar;
 
 
 public class Coordinador extends Cuenta {
-    static ArrayList<Estudiante> estudiantes;
-    static ArrayList<VirtualA> gruposVA;
-    static ArrayList<VirtualS> gruposVS;
-    static ArrayList<Presencial> gruposP;
-    static ArrayList<Profesor> profesores;
     
-
     public Coordinador(String nombre,String apellido1,String apellido2,String telefono1,String telefono2,String correo,String usuario,String contrasena){
 
         super(nombre, apellido1, apellido2, telefono1, telefono2, correo, usuario, contrasena);
-        estudiantes = new ArrayList<>();
-        gruposVA = new ArrayList<>();
-        gruposVS = new ArrayList<>();
-        gruposP = new ArrayList<>();
-        profesores = new ArrayList<>();
         
     }
-
-    //Metodos Gets
-    public static ArrayList<Presencial> getGruposP() {
-        return gruposP;
-    }
-
-    public static ArrayList<VirtualA> getGruposVA() {
-        return gruposVA;
-    }
-
-    public static ArrayList<VirtualS> getGruposVS() {
-        return gruposVS;
-    }
-
-    public ArrayList<Estudiante> getEstudiantes() {
-        return estudiantes;
-    }
-    public ArrayList<Profesor> getProfesores() {
-        return profesores;
-    }
-    
-
-    //Metodos Agregar
-    public void agregarProfesores(Profesor profesor) {
-        profesores.add(profesor);
-    }
-    public void agregarGrupos(VirtualA grupo) {
-        gruposVA.add(grupo);
-    }
-
-    public void agregarGrupos(VirtualS grupo) {
-        gruposVS.add(grupo);
-    }
-    public void agregarGrupos(Presencial grupo) {
-        gruposP.add(grupo);
-    }
-
-    public void agregarEstudiantes(Estudiante est) {
-        estudiantes.add(est);
-    }
-    public void asociarEst()
-    {
-        Console console = System.console();
-        String est = console.readLine("%s", "Ingrese el nombre del estudiante: ");
-        String curso = console.readLine("%s", "Ingrese el nombre del curso: ");
-        System.out.println("Grupos disponibles");
-        for ( Grupo grup : grupos)
-        {
-            
-        }
-    }
-
-    // metodos para buscar por nombre 
+  // metodos para buscar por nombre 
     public static Profesor buscarProfesor(String nom)
     {
-        for (Profesor prof: profesores)
+        for (Profesor prof: Main.profesores)
         {
             if (prof.nombre == nom)
             {
@@ -99,11 +36,11 @@ public class Coordinador extends Cuenta {
         return null;
 
     }
-    public static Estudiante buscareEstudiante(String nom)
+    public static Estudiante buscarEstudiante(int carnet)
     {
-        for (Estudiante est: estudiantes)
+        for (Estudiante est: Main.estudiantes)
         {
-            if (est.getNombre() == nom)
+            if (est.getCarnet() == carnet)
             {
                 return (est);
             }
@@ -111,6 +48,98 @@ public class Coordinador extends Cuenta {
         return null;
 
     }
+    // funcion para asociar un estudiante a un grupo de curso
+     public static void asociarEst()
+    {
+        ArrayList<String> listaId = new ArrayList<>();
+        Ansi.limpiarPantalla();
+        Console console = System.console();
+        Estudiante est = buscarEstudiante(Integer.parseInt(console.readLine("%s", "Ingrese el carnet del estudiante: ")));
+        System.out.println("Grupos disponibles");
+        int contP = 0;
+        int contGrupos = 0;
+        System.out.println("Presencial: ");
+        if(Main.gruposP.size() == 0){
+            System.out.println("------------------");
+        }
+        else{
+            while(contP < Main.gruposP.size()){
+                System.out.println((contGrupos+1)+"."+Main.gruposP.get(contP).nombre + Main.gruposP.get(contP).numGrupo);
+                listaId.add(Main.gruposP.get(contP).id);
+                contGrupos++;
+                contP++;
+            }
+        }
+        contP = 0;
+        System.out.println("Virtual Asincronico: ");
+        if(Main.gruposVA.size() == 0){
+            System.out.println("------------------");
+        }else{
+            while(contP < Main.gruposVA.size()){
+                System.out.println((contGrupos+1)+"."+Main.gruposVA.get(contP).nombre + Main.gruposVA.get(contP).numGrupo);
+                listaId.add(Main.gruposVA.get(contP).id);
+                contGrupos++;
+                contP++;
+            } 
+        }
+        contP = 0;
+        System.out.println("Virtual Sincronico: ");
+        if(Main.gruposVS.size() == 0){
+            System.out.println("------------------");
+        }else{
+            while(contP < Main.gruposVS.size()){
+                System.out.println((contGrupos+1)+"."+Main.gruposVS.get(contP).nombre + Main.gruposVS.get(contP).numGrupo);
+                listaId.add(Main.gruposVS.get(contP).id);
+                contGrupos++;
+                contP++;
+            }
+        }
+        System.out.println((contGrupos+1)+".volver");
+        int opt =Integer.parseInt(console.readLine("%s","opcion: "));
+        int opt2 = opt;
+        if(opt == (contGrupos+1)){
+           return;
+        }
+        if(opt2 <= Main.gruposP.size()){
+            int cont =0;
+            while(cont < Main.gruposP.size()){
+                if(listaId.get(opt-1) == Main.gruposP.get(cont).id){
+                    Main.gruposP.get(cont).AgregarEstudiantes(est);
+                    est.setListaGruposP(Main.gruposP.get(cont));
+                }
+                cont++;
+            }
+            return;
+        }else{
+            opt2 = opt2-Main.gruposP.size();
+        }
+        if(opt2 <= Main.gruposVA.size()){
+            int cont =0;
+            while(cont < Main.gruposVA.size()){
+                if(listaId.get(opt-1) == Main.gruposVA.get(cont).id){
+                    Main.gruposVA.get(cont).AgregarEstudiantes(est);
+                    est.setListaGruposVA(Main.gruposVA.get(cont));
+                }
+                cont++;
+            }
+            return;
+            
+        }else{
+            opt2 = opt2-Main.gruposVA.size();
+        }
+        if(opt2 <= Main.gruposVS.size()){
+            int cont =0;
+            while(cont < Main.gruposVS.size()){
+                if(listaId.get(opt-1) == Main.gruposVS.get(cont).id){
+                    Main.gruposVS.get(cont).AgregarEstudiantes(est);
+                    est.setListaGruposVS(Main.gruposVS.get(cont));
+                }
+                cont++;
+            }
+            return;
+        }
+    }
+
     
     //Metodos Modificar
     public void modificarCurso(Curso curso) {
@@ -176,7 +205,7 @@ public class Coordinador extends Cuenta {
             String correo = console.readLine("%s", "correo: ");
             String usuario = console.readLine("%s", "username: ");
             String contrasena = console.readLine("%s", "password: ");
-            profesores.add(new Profesor(nombre, ap1, ap2, tel1,tel2, correo, usuario, contrasena));
+            Main.profesores.add(new Profesor(nombre, ap1, ap2, tel1,tel2, correo, usuario, contrasena));
         }
 
     public static void CrearEstudiante(){
@@ -195,12 +224,13 @@ public class Coordinador extends Cuenta {
         byte[] edad = ed.getBytes();
         String genero = console.readLine("%s", "genero: ");
         String residencia = console.readLine("%s", "residencia: ");
-        estudiantes.add(new Estudiante(nombre, apellido1, apellido2, carnet, fechaNacimiento, edad, genero, residencia));
+        Main.estudiantes.add(new Estudiante(nombre, apellido1, apellido2, carnet, fechaNacimiento, edad, genero, residencia));
     }
 
     public static void MenuGrupo(){
+        Ansi.limpiarPantalla();
         Console console = System.console();
-         System.out.println("Seleccione la modalidad del grupo");
+        System.out.println("Seleccione la modalidad del grupo");
         System.out.println("1.Presencial");
         System.out.println("2.Virtual Asincronico");
         System.out.println("3.Virtual Sincronico");
@@ -208,30 +238,30 @@ public class Coordinador extends Cuenta {
         String opt = console.readLine("%s", "Seleccione alguna de las opciones: ");
         switch(opt){
             case "1":
-                CrearGrupo();
-                String aula = console.readLine("%s", "Aula: "); 
-                String horaInicio = console.readLine("%s", "Hora de inicio: "); 
-                String horaFinal = console.readLine("%s", "Hora de final: ");
-                gruposP.add(new Presencial(nombre,aula));
+                CrearGrupoPresencial();
+                Main.MenuCoordinador();
+                break;
             case "2":
-                CrearGrupo();
-                String medio = console.readLine("%s", "Plataforma: "); 
-            
+                CrearGrupoVirtualA();
+                Main.MenuCoordinador();
+                break;
             case "3":
-                CrearGrupo();
-                String medio = console.readLine("%s", "Plataforma: "); 
-                String horaInicio = console.readLine("%s", "Hora de inicio: "); 
-                String horaFinal = console.readLine("%s", "Hora de final: ");
-                
+                CrearGrupoVirtualS();
+                Main.MenuCoordinador();
+                break;
             case "4":
                 Main.MenuCoordinador();
+                break;
+            default:
+                System.out.println("Opcion incorreceta");
         }
     }
 
-    public static void CrearGrupo()
+        public static void CrearGrupoVirtualA()
     {
         Ansi.limpiarPantalla();
         Console console = System.console();
+        String id = console.readLine("%s", "id: ");
         String nombre = console.readLine("%s", "Nombre: ");
         String cred = console.readLine("%s", "Creditos: ");
         byte[] creditos = cred.getBytes();
@@ -239,12 +269,69 @@ public class Coordinador extends Cuenta {
         String cantH = console.readLine("%s", "Horas: ");
         byte[] cantidadHoras = cantH.getBytes();
         int numGrupo = Integer.parseInt((console.readLine("%s", "Numero de grupo: ")));
-        Profesor profe = buscarProfesor(console.readLine("%s", "Nombre del profesor: "));
+        String medio = console.readLine("%s", "Medio: ");
+        Ansi.limpiarPantalla();
+        System.out.println("Lista Profesores");
+        int cont = 0;
+                while(cont < Main.profesores.size()){
+                    System.out.println((cont+1)+"."+Main.profesores.get(cont).nombre);
+                    cont++;
+                }
+        int seleccion = Integer.parseInt(console.readLine("%s", "Seleccione el profesor del grupo: "))-1;
+        Main.gruposVA.add(new VirtualA(id,codigo, nombre, creditos, cantidadHoras, numGrupo, Main.profesores.get(seleccion),medio ));
         // Curso requisitos = console.readLine("%s", "requisitos: ");
-        // Curso correquisitos = console.readLine("%s", "correquisitos: ");
-        
+        }// Curso correquisitos = console.readLine("%s", "correquisitos: ");
 
+
+    public static void CrearGrupoVirtualS(){
+        Ansi.limpiarPantalla();
+        Console console = System.console();
+        String id = console.readLine("%s", "id: ");
+        String nombre = console.readLine("%s", "Nombre: ");
+        String cred = console.readLine("%s", "Creditos: ");
+        byte[] creditos = cred.getBytes();
+        String codigo = console.readLine("%s", "Codigo: ");
+        String cantH = console.readLine("%s", "Horas: ");
+        byte[] cantidadHoras = cantH.getBytes();
+        int numGrupo = Integer.parseInt((console.readLine("%s", "Numero de grupo: ")));
+        String medio = console.readLine("%s", "Medio: ");
+        String horaInicio = console.readLine("%s", "Hora de inicio: ");
+        String horaFinal = console.readLine("%s", "Hora de final: ");
+        Ansi.limpiarPantalla();
+        System.out.println("Lista Profesores");
+        int cont = 0;
+                while(cont < Main.profesores.size()){
+                    System.out.println((cont+1)+"."+Main.profesores.get(cont).nombre);
+                    cont++;
+                }
+        int seleccion = Integer.parseInt(console.readLine("%s", "Seleccione el profesor del grupo: "))-1;
+        Main.gruposVS.add(new VirtualS(id,codigo, nombre, creditos, cantidadHoras, numGrupo, Main.profesores.get(seleccion), medio, horaInicio, horaFinal));
     }
+    
+    public static void CrearGrupoPresencial(){
+        Ansi.limpiarPantalla();
+        Console console = System.console();
+        String id = console.readLine("%s", "id: ");
+        String nombre = console.readLine("%s", "Nombre: ");
+        String cred = console.readLine("%s", "Creditos: ");
+        byte[] creditos = cred.getBytes();
+        String codigo = console.readLine("%s", "Codigo: ");
+        String cantH = console.readLine("%s", "Horas: ");
+        byte[] cantidadHoras = cantH.getBytes();
+        int numGrupo = Integer.parseInt((console.readLine("%s", "Numero de grupo: ")));
+        String aula = console.readLine("%s", "Aula: ");
+        String horaInicio = console.readLine("%s", "Hora de inicio: ");
+        String horaFinal = console.readLine("%s", "Hora de final: ");
+        Ansi.limpiarPantalla();
+        System.out.println("Lista Profesores");
+        int cont = 0;
+                while(cont < Main.profesores.size()){
+                    System.out.println((cont+1)+"."+Main.profesores.get(cont).nombre);
+                    cont++;
+                }
+        int seleccion = Integer.parseInt(console.readLine("%s", "Seleccione el profesor del grupo: "))-1;
+        Main.gruposP.add(new Presencial(id,codigo, nombre, creditos, cantidadHoras, numGrupo, Main.profesores.get(seleccion), aula, horaInicio, horaFinal));
+        }
     
     
 }

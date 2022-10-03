@@ -1,14 +1,24 @@
 import java.util.ArrayList;
+
+import java.util.GregorianCalendar;
 import java.io.Console;
 
 public class Main{
     static ArrayList<Coordinador> coordinadores = new ArrayList<>();
-    static ArrayList<Grupo> grupos = new ArrayList<>();
-
+    static ArrayList<Estudiante> estudiantes = new ArrayList<>();
+    static ArrayList<VirtualA> gruposVA = new ArrayList<>();
+    static ArrayList<VirtualS> gruposVS = new ArrayList<>();
+    static ArrayList<Presencial> gruposP = new ArrayList<>();
+    static ArrayList<Profesor> profesores = new ArrayList<>();
     static ArrayList<Tutoria> tutorias = new ArrayList<>();
     static boolean ingreso;
     public static void main(String[] args) {
         coordinadores.add(new Coordinador("Jeison", "blanco", "rojas", "8128314","", "", "admin", "admin"));
+        profesores.add(new Profesor("Leo", "Viquez", "puto", "84474019", "", "", "prof", "prof"));
+        estudiantes.add(new Estudiante("Geancarlo", "Oviedo", "Vargas", 2022412243,new GregorianCalendar(2002,4,24), null, "Hombre", "Ciudad Quesada"));
+        gruposP.add(new Presencial("2a", "asdada", "Intro", null, null, 51, profesores.get(0), "B-3", "7:00", "11:00"));
+        gruposVS.add(new VirtualS("5a", "asdada", "Intro", null, null, 50, profesores.get(0), "Zoom", "7:00", "11:00"));
+        gruposVA.add(new VirtualA("a", "a", "Taller", null, null, 70, profesores.get(0), "Teams"));
         menu();
     }
     
@@ -34,7 +44,7 @@ public class Main{
         String usuario = console.readLine("%s", "username: ");
         String contrasena = console.readLine("%s", "password: ");
         while(cont < coordinadores.size()){
-            if((usuario.equals(Coordinador.profesores.get(cont).usuario)  ) & (contrasena.equals(Coordinador.profesores.get(cont).contrasena))){
+            if((usuario.equals(profesores.get(cont).usuario)  ) & (contrasena.equals(profesores.get(cont).contrasena))){
                 return true;
             }
             cont++;
@@ -48,14 +58,14 @@ public class Main{
 
     }*/
 
-    private static void MenuCoordinador(){
+    public static void MenuCoordinador(){
         Ansi.limpiarPantalla();
         System.out.println("1.Crear Coordinador");
         System.out.println("2.Crear Profesor");
-        System.out.println("3.Crear Grupo");
-        System.out.println("4.Crear estudiante");
-        System.out.println("4.Modificar estudiante");
-        System.out.println("5.Salir");
+        System.out.println("3.Crear estudiante");
+        System.out.println("4.Crear Grupo");
+        System.out.println("5.Matricular estudiante");
+        System.out.println("6.Salir");
         Console console = System.console();
         String opt = console.readLine("%s", "Seleccione alguna de las opciones: ");
         switch(opt){
@@ -72,7 +82,17 @@ public class Main{
                 Coordinador.CrearEstudiante();
                 MenuCoordinador();
                 break;
-            case "5":
+
+            case"4":
+                Coordinador.MenuGrupo();
+                break;
+
+            case"5":
+                Coordinador.asociarEst();
+                MenuCoordinador();
+                break;
+            case "6":
+                menu();
                 break;
             default:
                 Ansi.limpiarPantalla();
@@ -134,7 +154,7 @@ public class Main{
                 break;
    
             case "2":
-                if(Coordinador.profesores.size()==0){
+                if(profesores.size()==0){
                     Ansi.limpiarPantalla();
                     System.out.print("\u001B[31m");
                     console.readLine("No existen profesores");

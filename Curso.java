@@ -12,19 +12,16 @@ public abstract class Curso {
     protected byte[] cantidadHoras;
     protected ArrayList<Curso> requisitos;
     protected ArrayList<Curso> correquisitos;
-    // protected float calificacion;
-    // protected String RN;
+  
 
     //Metodo constructor de la clase curso
-    public Curso(String codigo,String nombre,byte[] creditos,byte[] cantidadHoras/*, float calificacion, String RN*/){
+    public Curso(String codigo,String nombre,byte[] creditos,byte[] cantidadHoras){
         this.codigo=codigo;
         this.nombre=nombre;
         this.creditos=creditos;
         this.cantidadHoras=cantidadHoras;
         this.requisitos=new ArrayList<Curso>();
         this.correquisitos=new ArrayList<Curso>();
-        // this.calificacion=calificacion;
-        // this.RN=RN;
     }
     //Metodos Sets
     public void setCodigo(String codigo) {
@@ -45,12 +42,7 @@ public abstract class Curso {
     public void setCorrequisitos (Curso curso){
         correquisitos.add(curso);
     }
-    public void setCalificacion(float calificacion) {
-        this.calificacion = calificacion;
-    }
-    public void setRN(String rN) {
-        RN = rN;
-    }
+    
 
     //Metodos Gets
     public String getCodigo() {
@@ -71,12 +63,7 @@ public abstract class Curso {
     public ArrayList<Curso> getCorrequisitos() {
         return correquisitos;
     }
-    public float getCalificacion() {
-        return calificacion;
-    }
-    public String getRN() {
-        return RN;
-    }
+    
 
 }
 
