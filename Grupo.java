@@ -1,19 +1,25 @@
 import java.util.ArrayList;
 /**
  */
-public abstract class Grupo extends Curso{
+public abstract class Grupo {
     protected int numGrupo;
     protected String id;
     public ArrayList<Estudiante>estudiantes;
     public Profesor profesor;
+    public Curso curso;
     
 
-    public Grupo(String id, String codigo,String nombre,byte creditos,byte cantidadHoras,int numGrupo, Profesor profesor){
-        super(codigo,nombre,creditos,cantidadHoras/*,calificacion,RN*/);
+    public Grupo(int numGrupo,String id, Profesor profesor,Curso curso){
+        
         this.numGrupo = numGrupo;
-        this.profesor = profesor;
         this.id = id;
         this.estudiantes= new ArrayList<>();
+        this.profesor = profesor;
+        this.curso=curso;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void AgregarEstudiantes(Estudiante estudiantes) {
@@ -24,10 +30,29 @@ public abstract class Grupo extends Curso{
         return estudiantes;
     }
 
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
+    }
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setCursos(Curso cursos) {
+        this.curso = cursos;
+    }
+    public Curso getCursos() {
+        return curso;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+
     public String getDescripcion()
     {
         String respuesta;
-        respuesta=String.format("%s (%d)\n\t %s\n", this.nombre,this.numGrupo,this.profesor.getNombre());
+        respuesta=String.format("%s(%d)\n\t %s\n",this.id,this.numGrupo,this.profesor.getNombre());
         return (respuesta);
     }
 }
@@ -37,8 +62,8 @@ class VirtualS extends Grupo{
     private String horaInicio;
     private String horaFinal;
 
-    public VirtualS(String id,String codigo,String nombre,byte creditos,byte cantidadHoras,int numGrupo,Profesor profesor, String medio,String horaInicio,String horaFinal){
-        super(id,codigo, nombre, creditos, cantidadHoras, numGrupo, profesor);
+    public VirtualS(int numGrupo,String id, Profesor profesor, String medio,String horaInicio,String horaFinal,Curso curso){
+        super(numGrupo,id, profesor,curso);
         this.medio=medio;
         this.horaInicio=horaInicio;
         this.horaFinal=horaFinal;
@@ -73,8 +98,8 @@ class Presencial extends Grupo{
     private String horaInicio;
     private String horaFinal;
 
-    public Presencial(String id,String codigo,String nombre,byte creditos,byte cantidadHoras,int numGrupo,Profesor profesor, String aula,String horaInicio,String horaFinal){
-        super(id,codigo, nombre, creditos, cantidadHoras, numGrupo , profesor);
+    public Presencial(int numGrupo,String id,Profesor profesor, String aula,String horaInicio,String horaFinal,Curso curso){
+        super( numGrupo,id, profesor,curso);
         this.aula=aula;
         this.horaInicio=horaInicio;
         this.horaFinal=horaFinal;
@@ -103,8 +128,8 @@ class Presencial extends Grupo{
 
 class VirtualA extends Grupo{
     private String medio;
-    public VirtualA(String id,String codigo,String nombre,byte creditos,byte cantidadHoras,int numGrupo,Profesor profesor, String medio){
-        super(id,codigo, nombre, creditos, cantidadHoras,numGrupo, profesor);
+    public VirtualA(int numGrupo,String id,Profesor profesor, String medio,Curso curso){
+        super(numGrupo,id, profesor,curso);
         this.medio=medio;
         this.profesor.getGruposVA().add(this);
         

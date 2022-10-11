@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * Clase donde se describe los datos del Curso impartido en el TEC
  * @author Fabian Rojas, Geancarlo Oviedo, Jeison Blanco
  */
-public abstract class Curso {
+public class Curso {
     protected String codigo;
     protected String nombre;
     protected byte creditos;

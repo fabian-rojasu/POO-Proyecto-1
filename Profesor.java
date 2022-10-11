@@ -35,7 +35,7 @@ public class Profesor extends Cuenta {
     {
         for (Presencial grup: Main.gruposP)
         {
-            if (grup.getCodigo() == id)
+            if (grup.getId() == id)
             {
                 
                 return (grup);
@@ -48,7 +48,7 @@ public class Profesor extends Cuenta {
     {
         for (VirtualA grup: Main.gruposVA)
         {
-            if (grup.getCodigo() == id)
+            if (grup.getId() == id)
             {
                 
                 return (grup);
@@ -61,7 +61,7 @@ public class Profesor extends Cuenta {
     {
         for (VirtualS grup: Main.gruposVS)
         {
-            if (grup.getCodigo() == id)
+            if (grup.getId() == id)
             {
                 
                 return (grup);
@@ -85,11 +85,41 @@ public class Profesor extends Cuenta {
         return new Acompañamiento(tipoRep, fech, descrip, est);
     }
 
-    public static Calificacion crearCalificacion(){
-        
-        float nota = Float.parseFloat(console.readLine("%s","Ingrese"))
-        
-        return ;
+    public static Calificacion crearCalificacion(Estudiante est){
+
+        Console console = System.console();
+        System.out.println("En que tipo de curso se ecuentra el estudiante?");
+        System.out.println("1.Presencial");
+        System.out.println("2.Virtual asincronico");
+        System.out.println("2.Virtual sincronico");
+        String opt =console.readLine("%s", "Seleccione alguna de las opciones: ");
+        switch(opt){
+            case"1":
+                String idGrupoPre =console.readLine("%s", "Ingrese el id del grupo al que pertenece el estudiante a calificar: ");
+                Presencial grupoPre = Profesor.buscarGrupoP(idGrupoPre);
+                float notaP = Float.parseFloat(console.readLine("%s","Ingrese la nota que quiere asignar: "));
+                notaP=Math.round(notaP/5)*5;
+                Calificacion nuevaCalP=new Calificacion(notaP, est);
+                nuevaCalP.setGrupoP(grupoPre);
+                return nuevaCalP;
+            case"2":
+                String idGrupoVirA =console.readLine("%s", "Ingrese el id del grupo al que pertenece el estudiante a calificar: ");
+                VirtualA grupoVirA = Profesor.buscarGrupoVA(idGrupoVirA);
+                float notaVA = Float.parseFloat(console.readLine("%s","Ingrese la nota que quiere asignar: "));
+                notaVA=Math.round(notaVA/5)*5;
+                Calificacion nuevaCalVA=new Calificacion(notaVA, est);
+                nuevaCalVA.setGrupoVA(grupoVirA);
+                return nuevaCalVA;
+            case"3":
+                String idGrupoVirS =console.readLine("%s", "Ingrese el id del grupo al que pertenece el estudiante a calificar: ");
+                VirtualS grupoVirS = Profesor.buscarGrupoVS(idGrupoVirS);
+                float notaVS = Float.parseFloat(console.readLine("%s","Ingrese la nota que quiere asignar: "));
+                notaVS=Math.round(notaVS/5)*5;
+                Calificacion nuevaCalVS=new Calificacion(notaVS, est);
+                nuevaCalVS.setGrupoVS(grupoVirS);
+                return nuevaCalVS;
+        }
+        return null;
     }
 
 
@@ -138,7 +168,55 @@ public class Profesor extends Cuenta {
     // {
 
     // }
-    
 
-
+    public static  void reporteRNP(Profesor profe){//Probar
+        
+        Console console = System.console();
+        System.out.println("En que tipo de grupo se ecuentra el estudiante?");
+        System.out.println("1.Presencial");
+        System.out.println("2.Virtual asincronico");
+        System.out.println("2.Virtual sincronico");
+        String opt =console.readLine("%s", "Seleccione alguna de las opciones: ");
+        switch(opt){
+            case"1":
+                String idGrupoPre =console.readLine("%s", "Ingrese el id del grupo: ");
+                Presencial grupoPre = profe.buscarGrupoP(idGrupoPre);
+                for (Estudiante est : grupoPre.estudiantes) {
+                    String nom = grupoPre.curso.nombre;
+                    int cont =0;
+                    for (Calificacion calificacion : est.getCalificaciones()) {
+                        if(calificacion.getGrupoP().curso.nombre==nom){
+                            cont++;
+                        }
+                    }
+                    System.out.println(est.getNombre()+"RN: "+ (cont-1));
+                } 
+            case"2":
+                String idGrupoVA =console.readLine("%s", "Ingrese el id del grupo: ");
+                Presencial grupoVA = profe.buscarGrupoP(idGrupoVA);
+                for (Estudiante est : grupoVA.estudiantes) {
+                    String nom = grupoVA.curso.nombre;
+                    int cont =0;
+                    for (Calificacion calificacion : est.getCalificaciones()) {
+                        if(calificacion.getGrupoVA().curso.nombre==nom){
+                            cont++;
+                        }
+                    }
+                    System.out.println(est.getNombre()+"RN: "+ (cont-1));
+                }
+            case"3":
+                String idGrupoVS =console.readLine("%s", "Ingrese el id del grupo: ");
+                Presencial grupoVS = profe.buscarGrupoP(idGrupoVS);
+                for (Estudiante est : grupoVS.estudiantes) {
+                    String nom = grupoVS.curso.nombre;
+                    int cont =0;
+                    for (Calificacion calificacion : est.getCalificaciones()) {
+                        if(calificacion.getGrupoVS().curso.nombre==nom){
+                            cont++;
+                        }
+                    }
+                    System.out.println(est.getNombre()+"RN: "+ (cont-1));
+                }
+        }
+    }
 }

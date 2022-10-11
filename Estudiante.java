@@ -19,6 +19,7 @@ public class Estudiante {
     private ArrayList<Presencial> gruposP ;
     private ArrayList<Tutoria> tutorias;
     private ArrayList<Tramites> tramites;
+    private ArrayList<Calificacion> calificaciones;
 
     //Metodo constructor de la clase estudiante
     public Estudiante(String nombre,String apellido1,String apellido2,int carnet,Calendar fechaNacimiento,byte[] edad,String genero,String residencia){
@@ -35,6 +36,7 @@ public class Estudiante {
         gruposP = new ArrayList<>();
         tutorias = new ArrayList<>();
         tramites = new ArrayList<>();
+        calificaciones= new ArrayList<>();
 
     }
 
@@ -101,6 +103,9 @@ public class Estudiante {
     public ArrayList<Tramites> getTramites() {
         return tramites;
     }
+    public ArrayList<Calificacion> getCalificaciones() {
+        return calificaciones;
+    }
 
     // Metodos de agragar en las listas
    public void setListaGruposP(Presencial grupo) {
@@ -117,6 +122,9 @@ public class Estudiante {
     }
     public void setTutorias(Tutoria tutoria) {
         this.tutorias.add(tutoria);
+    }
+    public void setCalificaciones(Calificacion calificacion) {
+        this.calificaciones.add(calificacion);
     }
     
 }

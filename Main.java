@@ -5,22 +5,28 @@ import java.io.Console;
 public class Main{
     static ArrayList<Coordinador> coordinadores = new ArrayList<>();
     static ArrayList<Estudiante> estudiantes = new ArrayList<>();
+    static ArrayList<Profesor> profesores = new ArrayList<>();
     static ArrayList<VirtualA> gruposVA = new ArrayList<>();
     static ArrayList<VirtualS> gruposVS = new ArrayList<>();
     static ArrayList<Presencial> gruposP = new ArrayList<>();
-    static ArrayList<Profesor> profesores = new ArrayList<>();
     static ArrayList<Acompañamiento> acompañamientos = new ArrayList<>();
+    static ArrayList<Curso> cursos = new ArrayList<>();
+    static ArrayList<ITramites> tramites = new ArrayList<>();
     static boolean ingreso;
     static Console console = System.console();
 
     public static void main(String[] args) {
+        cursos.add(new Curso("123", "POO", Byte.parseByte("4") , Byte.parseByte("4")));
+        cursos.add(new Curso("321", "Estruct", Byte.parseByte("3") , Byte.parseByte("5")));
+        cursos.add(new Curso("456", "Arqui", Byte.parseByte("2") , Byte.parseByte("6")));
         coordinadores.add(new Coordinador("Jeison", "blanco", "rojas", "8128314","", "", "admin", "admin"));
         profesores.add(new Profesor("Leo", "Viquez", "puto", "84474019", "", "", "prof", "prof"));
         estudiantes.add(new Estudiante("Geancarlo", "Oviedo", "Vargas", 2022412243,new GregorianCalendar(2002,4,24), null, "Hombre", "Ciudad Quesada"));
-        gruposP.add(new Presencial("2a", "asdada", "Intro", Byte.parseByte("1"), Byte.parseByte("1"), 51, profesores.get(0), "B-3", "7:00", "11:00"));
-        gruposVS.add(new VirtualS("5a", "asdada", "Intro", Byte.parseByte("1"), Byte.parseByte("1"), 50, profesores.get(0), "Zoom", "7:00", "11:00"));
-        gruposVA.add(new VirtualA("a", "a", "Taller", Byte.parseByte("1"), Byte.parseByte("1"), 70, profesores.get(0), "Teams"));
+        gruposP.add(new Presencial( 50,"G50",profesores.get(0),"B-3", "7:00", "11:00",cursos.get(0)));
+        gruposVS.add(new VirtualS(50,"G50",profesores.get(0),"teams", "7:00", "11:00",cursos.get(1)));
+        gruposVA.add(new VirtualA(50,"G50",profesores.get(0),"zoom",cursos.get(2 )));
         menu();
+        
     }
     
     private static boolean loginCoordinador(){
@@ -72,9 +78,12 @@ public class Main{
     }
 
     
+    
     public static void MenuProfesor()
     {
         Ansi.limpiarPantalla();
+        int carne =Integer.parseInt(console.readLine("Ingrese el carnet del estudiante que quiere calificar: ")); 
+        Estudiante est =Coordinador.buscarEstudiante(carne);
         System.out.println("1.Tutorias");
         System.out.println("2.Crear acompañamiento");
         System.out.println("2.Crear Calificacion");
@@ -88,7 +97,7 @@ public class Main{
                 acompañamientos.add(Profesor.crearAcompañamiento());
                 break;
             case"3":
-                
+                est.setCalificaciones(Profesor.crearCalificacion(est));
                 break;
         }
 
