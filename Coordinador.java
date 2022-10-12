@@ -445,6 +445,7 @@ public class Coordinador extends Cuenta {
                     }
                 }
                 System.out.println("En el curso %s tiene un estado de RN: %".format("%s", nom, cont-1));
+                
             }
             if (calificacion.getGrupoVA()!=null){
                 String nom =calificacion.getGrupoVA().getCursos().nombre;
@@ -455,6 +456,7 @@ public class Coordinador extends Cuenta {
                     }
                 }
                 System.out.println("En el curso %s tiene un estado de RN: %".format("%s", nom, cont-1));
+                
             }
 
             if(calificacion.getGrupoVS()!=null){
@@ -466,12 +468,21 @@ public class Coordinador extends Cuenta {
                     }
                 }
                 System.out.println("En el curso %s tiene un estado de RN: %".format("%s", nom, cont-1));
+                
             }
-
+            
         }
         
     }
-    
+    /**
+    Pedir en menu el carnet de estudiante y validar que exista
+     */
+    public static void reporteLevRequisitos(Estudiante est ){
+        Ansi.limpiarPantalla();
+        if (Main.tramites.get == )
+        
+
+    }
 
     public static void crearTramites(){
         Ansi.limpiarPantalla();
@@ -486,11 +497,11 @@ public class Coordinador extends Cuenta {
                 int ced =Integer.parseInt(console.readLine("Digite la carnet del estudiante del tramite: "));
                 Estudiante est =Coordinador.buscarEstudiante(ced);
                 String descrip = console.readLine("Escriba la descripcion del elevatamientode requisitos: ");
-                int anio = Integer.parseInt(console.readLine("Escriba el año: "));
-                int mes = Integer.parseInt(console.readLine("Escriba el mes: "));
-                int dia = Integer.parseInt(console.readLine("Escriba el dia: "));
+                int anio = Integer.parseInt(console.readLine("Escriba el año del tramite: "));
+                int mes = Integer.parseInt(console.readLine("Escriba el mes del tramite: "));
+                int dia = Integer.parseInt(console.readLine("Escriba el dia del tramite: "));
                 String justEst = console.readLine("Escriba la justificacion del estudiante del por que levantar requisitos: ");
-                String cod =console.readLine("Digite la carnet del estudiante del tramite: ");
+                String cod =console.readLine("Digite la codigo del curso a levantar: ");
                 Curso cur =Coordinador.buscarCurso(cod);
                 Boolean estado;
                 String esta = console.readLine("Aprobar tramite? s/n: ");
@@ -500,27 +511,59 @@ public class Coordinador extends Cuenta {
                     estado = false;
                 }
                 Main.tramites.add(new LevRequisitos(justEst, estado, cur, new GregorianCalendar(anio,mes,dia), descrip, est));
+                break;
             case 2:
-                
                 int ced2 =Integer.parseInt(console.readLine("Digite la carnet del estudiante del tramite: "));
                 Estudiante est2 =Coordinador.buscarEstudiante(ced2);
-                String descrip2 = console.readLine("Escriba la descripcion del elevatamientode requisitos: ");
-                int anio2 = Integer.parseInt(console.readLine("Escriba el año: "));
-                int mes2 = Integer.parseInt(console.readLine("Escriba el mes: "));
-                int dia2 = Integer.parseInt(console.readLine("Escriba el dia: "));
-
-                /*String justEst = console.readLine("Escriba la justificacion del estudiante del por que levantar requisitos: ");
-                String cod =console.readLine("Digite la carnet del estudiante del tramite: ");
-                Curso cur =Coordinador.buscarCurso(cod);
-                Boolean estado;
-                String esta = console.readLine("Aprobar tramite? s/n: ");
-                if((esta == "s")||(esta == "S")){
-                    estado =true;
+                String descrip2 = console.readLine("Escriba la descripcion del levatamiento de RN: ");
+                int anio2 = Integer.parseInt(console.readLine("Escriba el año del tramite: "));
+                int mes2 = Integer.parseInt(console.readLine("Escriba el mes del tramite: "));
+                int dia2 = Integer.parseInt(console.readLine("Escriba el dia del tramite: "));
+                String cod2 =console.readLine("Digite la codigo del curso RN: ");
+                Curso cur2 =Coordinador.buscarCurso(cod2);
+                boolean condicional=true;
+                ArrayList<Curso> cursosLev = new ArrayList<>();
+                while(condicional== true){
+                    if(Main.cursos.size()!=0){
+                        int cont =0;
+                        while(cont < Main.cursos.size()){
+                            System.out.println((cont+1)+"."+Main.cursos.get(cont).nombre);
+                            cont++;
+                        }
+                        int seleccionR = Integer.parseInt(console.readLine("%s", "Seleccione el curso a poder matricular: "))-1;
+                        cursosLev.add(Main.cursos.get(seleccionR));
+                        String salir = console.readLine("Desea agregar otro? s/n: ");
+                        if ((salir=="s")||(salir=="S")){
+                            condicional=false;
+                        }
+                }
+                Boolean estado2;
+                String esta2 = console.readLine("Aprobar tramite? s/n: ");
+                if((esta2 == "s")||(esta2 == "S")){
+                    estado2 =true;
                 }else{
-                    estado = false;
-                }*/
-                //Main.tramites.add(new LevRequisitos(justEst, estado, cur, new GregorianCalendar(anio2,mes2,dia2), descrip2, est2));
+                    estado2 = false;
+                }
+                Main.tramites.add(new LevRN(cur2, new GregorianCalendar(anio2,mes2,dia2), descrip2, est2, estado2));
+                break;
+                }
+            case 3:
+                int ced3 =Integer.parseInt(console.readLine("Digite la carnet del estudiante del tramite: "));
+                Estudiante est3 =Coordinador.buscarEstudiante(ced3);
+                String descrip3 = console.readLine("Escriba la descripcion del la solicitud de beca: ");
+                int anio3 = Integer.parseInt(console.readLine("Escriba el año del tramite: "));
+                int mes3 = Integer.parseInt(console.readLine("Escriba el mes del tramite: "));
+                int dia3 = Integer.parseInt(console.readLine("Escriba el dia del tramite: "));  
+                String tipoBeca = console.readLine("Escriba el tipo de beca: ");
+                int anioPeridoInicio = Integer.parseInt(console.readLine("Escriba el año del inicio de periodo: "));
+                int mesPeridoInicio = Integer.parseInt(console.readLine("Escriba el mes del inicio de periodo: "));
+                int diaPeridoInicio = Integer.parseInt(console.readLine("Escriba el dia del inicio de periodo: "));
+                int anioPeridoFin = Integer.parseInt(console.readLine("Escriba el año del Fin de periodo: "));
+                int mesPeridoFin = Integer.parseInt(console.readLine("Escriba el mes del Fin de periodo: "));
+                int diaPeridoFin = Integer.parseInt(console.readLine("Escriba el dia del Fin de periodo: "));
+                Main.tramites.add(new SoliBeca(tipoBeca, new GregorianCalendar(anioPeridoInicio,mesPeridoInicio,diaPeridoInicio), new GregorianCalendar(anio3,mes3,dia3), descrip3, est3, new GregorianCalendar(anioPeridoFin,mesPeridoFin,diaPeridoFin)));
+                break;   
         }
-
     }
+    
 }

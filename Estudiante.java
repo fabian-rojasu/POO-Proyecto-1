@@ -18,7 +18,7 @@ public class Estudiante {
     private ArrayList<VirtualS> gruposVS ;
     private ArrayList<Presencial> gruposP ;
     private ArrayList<Tutoria> tutorias;
-    private ArrayList<Tramites> tramites;
+    private ArrayList<ITramites> tramites;
     private ArrayList<Calificacion> calificaciones;
 
     //Metodo constructor de la clase estudiante
@@ -100,7 +100,7 @@ public class Estudiante {
     public ArrayList<VirtualS> getGruposVS() {
         return gruposVS;
     }
-    public ArrayList<Tramites> getTramites() {
+    public ArrayList<ITramites> getTramites() {
         return tramites;
     }
     public ArrayList<Calificacion> getCalificaciones() {
@@ -117,7 +117,7 @@ public class Estudiante {
     public void setListaGruposVS(VirtualS grupo) {
         this.gruposVS.add(grupo);
     }
-    public void setTramites(Tramites tramites) {
+    public void setTramites(ITramites tramites) {
         this.tramites.add(tramites);
     }
     public void setTutorias(Tutoria tutoria) {

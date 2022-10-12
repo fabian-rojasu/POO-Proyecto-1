@@ -99,24 +99,29 @@ class LevRN extends Tramites implements ITramites{
 }
 /**
 @param tipo tipo de beca (prestamo o total)
-@param periodo periodo de tiempo al que se va aplicar la beca
+@param periodoInicio periodo de tiempo al que se va aplicar la beca
  */
 class SoliBeca extends Tramites implements ITramites{
 
     private String tipo;
-    private Calendar periodo;
+    private Calendar periodoInicio;
+    private Calendar periodoFin;
 
-    public SoliBeca(String tipo, Calendar periodo,Calendar fecha,String descripcion, Estudiante est )
+    public SoliBeca(String tipo, Calendar periodoInicio,Calendar fecha,String descripcion, Estudiante est, Calendar periodoFin )
     {
         super(fecha,descripcion,est);
         this.tipo = tipo;
-        this.periodo = periodo;
+        this.periodoInicio = periodoInicio;
+        this.periodoFin=periodoFin;
     }
-    public Calendar getPeriodo() {
-        return periodo;
+    public Calendar getPeriodoInicio() {
+        return periodoInicio;
     }
     public String getTipo() {
         return tipo;
+    }
+    public Calendar getPeriodoFin() {
+        return periodoFin;
     }
     @Override
     public void asociar() {
