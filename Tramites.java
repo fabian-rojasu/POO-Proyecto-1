@@ -39,6 +39,14 @@ class LevRequisitos extends Tramites implements ITramites {
         this.cursoLev = cursoLev;
         this.estado = estado;
     }
+    public LevRequisitos(String justifi,boolean estado,Curso cursoLev,Calendar fecha,String descripcion, Estudiante est ,String justificacionRechazo)
+    {
+        super(fecha,descripcion,est);
+        this.justificacionEst = justifi;
+        this.cursoLev = cursoLev;
+        this.estado = estado;
+        this.justificacionRechazo=justificacionRechazo;
+    }
     public Curso getCursoLev() {
         return cursoLev;
     }

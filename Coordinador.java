@@ -9,47 +9,46 @@ import java.util.Calendar;
  * 
  */ 
 public class Coordinador extends Cuenta {
-    static ArrayList<String> listaId;
     
     //Metodo constructor de la clase coordinador 
     public Coordinador(String nombre,String apellido1,String apellido2,String telefono1,String telefono2,String correo,String usuario,String contrasena){
-
+        
         super(nombre, apellido1, apellido2, telefono1, telefono2, correo, usuario, contrasena);
         
     }
-
+    
     //*****Metodos Buscar*****
-
+    
     //metodo para buscar un profesor por nombre 
     public static Profesor buscarProfesor(String nom){
         for (Profesor prof: Main.profesores){
-            if (prof.nombre == nom){
+            if (prof.nombre.equals(nom)){
                 return (prof);
             }
         }
         return null;
     }
-
+    
     //metodo para buscar un coordinador por nombre 
     public static Coordinador buscarCoordinador(String nom){
         for (Coordinador coordi: Main.coordinadores){
-            if (coordi.nombre == nom){
+            if (coordi.nombre.equals(nom)){
                 return (coordi);
             }
         }
         return null;
     }
-
+    
     //metodo para buscar un curso por codigo
     public static Curso buscarCurso(String cod){
         for (Curso cur: Main.cursos){
-            if (cur.codigo == cod){
+            if (cur.codigo.equals(cod)){
                 return (cur);
             }
         }
         return null;
     }
-
+    
     //metodo para buscar estudiante por carnet
     public static Estudiante buscarEstudiante(int carnet){
         for (Estudiante est: Main.estudiantes){
@@ -59,12 +58,14 @@ public class Coordinador extends Cuenta {
         }
         return null;
     }
-
+    
     /**
      * Metodo imprimir cursos, que muestra tanto los presenciales, virtuales asincornicos y virtuales sincronicos
      */
+    public static ArrayList<String> listaId=new ArrayList<>();
     static int contGrupos = 0;
     public static void ImprimirCursos(ArrayList<Presencial> gruposP,ArrayList<VirtualS> gruposVS,ArrayList<VirtualA> gruposVA){
+
         contGrupos = 0;
         System.out.println("Grupos disponibles");
         int contP = 0;
@@ -167,7 +168,7 @@ public class Coordinador extends Cuenta {
      * Metodo que recibe un curso y lo modifica
      * @param curso
      */
-    public void modificarCurso(Curso curso) {
+    public static void modificarCurso(Curso curso) {
         Console console = System.console();
         System.out.println("1.Codigo");
         System.out.println("2.Nombre");
@@ -381,17 +382,35 @@ public class Coordinador extends Cuenta {
         Curso nuevoCurso =new Curso(codigo, nombre, creditos, cantidadHoras);
         Main.cursos.add(nuevoCurso);
         int cont = 0;
-        if(Main.cursos.size()!=0){
-            while(cont < Main.cursos.size()){
-                System.out.println((cont+1)+"."+Main.cursos.get(cont).nombre);
-                cont++;
+        String resp =  console.readLine("Desea insertar requisitos? s/n");
+
+        if((resp.equals("s")||(resp.equals("S")))){
+
+            if(Main.cursos.size()!=0){
+                while(cont < Main.cursos.size()){
+                    System.out.println((cont+1)+"."+Main.cursos.get(cont).nombre);
+                    cont++;
+                }
+                int seleccionR = Integer.parseInt(console.readLine("%s", "Seleccione el curso para los requisitos: "))-1;
+                nuevoCurso.setRequisitos(Main.cursos.get(seleccionR));
+            }else{
+                System.out.println("No hay Cursos para agregar de requisitos");
             }
-            int seleccionR = Integer.parseInt(console.readLine("%s", "Seleccione el curso para los requisitos: "))-1;
-            int seleccionC = Integer.parseInt(console.readLine("%s", "Seleccione el curso para los correquisitos: "))-1;
-            nuevoCurso.setRequisitos(Main.cursos.get(seleccionR));
-            nuevoCurso.setCorrequisitos(Main.cursos.get(seleccionC));
-        }else{
-            System.out.println("No hay Cursos para agregar de requisitos ni correquisitos");
+        }
+        String respC =  console.readLine("Desea insertar correquisitos? s/n");
+
+        if((respC.equals("s")||(respC.equals("S")))){
+
+            if(Main.cursos.size()!=0){
+                while(cont < Main.cursos.size()){
+                    System.out.println((cont+1)+"."+Main.cursos.get(cont).nombre);
+                    cont++;
+                }
+                int seleccionC = Integer.parseInt(console.readLine("%s", "Seleccione el curso para los correquisitos: "))-1;
+                nuevoCurso.setCorrequisitos(Main.cursos.get(seleccionC));
+            }else{
+                System.out.println("No hay Cursos para agregar de correquisitos");
+            }
         }
     }
 
@@ -405,40 +424,45 @@ public class Coordinador extends Cuenta {
         int carnet =  Integer.parseInt(console.readLine("Ingrese el carnet del estudiante que desea ver: ")) ;
         Estudiante est = buscarEstudiante(carnet);
         ArrayList<Calificacion> cal = est.getCalificaciones();
-        int cont = 0;
-        int valor = (int) 100/cal.size(); 
-        double ponderado = 0;
-        while(cont < cal.size()){
-            if(cont == cal.size()){
-                if(cal.get(cont).getGrupoP() != null){
-                     System.out.println("Curso: "+cal.get(cont).getGrupoP().getCursos().getNombre()+" Nota: "+cal.get(cont).getNota());
-                }else if(cal.get(cont).getGrupoVA() != null){
-                    System.out.println("Curso: "+cal.get(cont).getGrupoVA().getCursos().getNombre()+" Nota: "+cal.get(cont).getNota());
+        if(cal.size()!=0){
+            int cont = 0;
+            int valor = (int) 100/cal.size(); 
+            double ponderado = 0;
+            while(cont < cal.size()){
+                if(cont == cal.size()){
+                    if(cal.get(cont).getGrupoP() != null){
+                         System.out.println("Curso: "+cal.get(cont).getGrupoP().getCursos().getNombre()+" Nota: "+cal.get(cont).getNota());
+                    }else if(cal.get(cont).getGrupoVA() != null){
+                        System.out.println("Curso: "+cal.get(cont).getGrupoVA().getCursos().getNombre()+" Nota: "+cal.get(cont).getNota());
+                    }else{
+                        System.out.println("Curso: "+cal.get(cont).getGrupoVS().getCursos().getNombre()+" Nota: "+cal.get(cont).getNota()); 
+                    }
                 }else{
-                    System.out.println("Curso: "+cal.get(cont).getGrupoVS().getCursos().getNombre()+" Nota: "+cal.get(cont).getNota()); 
+                   if(cal.get(cont).getGrupoP() != null){
+                         System.out.println("Curso: "+cal.get(cont).getGrupoP().getCursos().getNombre()+" Nota: "+cal.get(cont).getNota()+", ");
+                    }else if(cal.get(cont).getGrupoVA() != null){
+                        System.out.println("Curso: "+cal.get(cont).getGrupoVA().getCursos().getNombre()+" Nota: "+cal.get(cont).getNota()+", ");
+                    }else{
+                        System.out.println("Curso: "+cal.get(cont).getGrupoVS().getCursos().getNombre()+" Nota: "+cal.get(cont).getNota()+", "); 
+                    }  
                 }
-            }else{
-               if(cal.get(cont).getGrupoP() != null){
-                     System.out.println("Curso: "+cal.get(cont).getGrupoP().getCursos().getNombre()+" Nota: "+cal.get(cont).getNota()+", ");
-                }else if(cal.get(cont).getGrupoVA() != null){
-                    System.out.println("Curso: "+cal.get(cont).getGrupoVA().getCursos().getNombre()+" Nota: "+cal.get(cont).getNota()+", ");
-                }else{
-                    System.out.println("Curso: "+cal.get(cont).getGrupoVS().getCursos().getNombre()+" Nota: "+cal.get(cont).getNota()+", "); 
-                }  
-            }
-            if(cal.get(cont).getNota() == 100){
-                ponderado += valor*1;
-            }
-            else if(cal.get(cont).getNota() < 100){
-                if(cal.get(cont).getNota() < 10){
-                    ponderado += valor*(cal.get(cont).getNota()*0.1);
-                }else{
-                    ponderado += valor*(cal.get(cont).getNota()*0.01);
+                if(cal.get(cont).getNota() == 100){
+                    ponderado += valor*1;
                 }
+                else if(cal.get(cont).getNota() < 100){
+                    if(cal.get(cont).getNota() < 10){
+                        ponderado += valor*(cal.get(cont).getNota()*0.1);
+                    }else{
+                        ponderado += valor*(cal.get(cont).getNota()*0.01);
+                    }
+                }
+                cont++;
             }
-            cont++;
+            console.readLine("Ponderado: "+ponderado);
+
+        }else{
+            console.readLine("El estudiante no tiene calificaciones");
         }
-        System.out.println("Ponderado: "+ponderado);
     }
 
     /**
@@ -446,43 +470,58 @@ public class Coordinador extends Cuenta {
      * @param est
      */
     public static void reporteRN(Estudiante est){//Probar
+        Console console = System.console();
         ArrayList<Calificacion> calificaciones= est.getCalificaciones();
-        for (Calificacion calificacion : calificaciones) {
-            if (calificacion.getGrupoP()!=null){
-                String nom =calificacion.getGrupoP().getCursos().nombre;
-                int cont =0;
-                for (Calificacion calificacion2 : calificaciones) { 
-                    if(calificacion2.getGrupoP().getCursos().nombre==nom){
-                        cont++;
-                    }
-                }
-                System.out.println("En el curso %s tiene un estado de RN: %".format("%s", nom, cont-1));
-                
-            }
-            if (calificacion.getGrupoVA()!=null){
-                String nom =calificacion.getGrupoVA().getCursos().nombre;
-                int cont =0;
-                for (Calificacion calificacion2 : calificaciones) { 
-                    if(calificacion2.getGrupoVA().getCursos().nombre==nom){
-                        cont++;
-                    }
-                }
-                System.out.println("En el curso %s tiene un estado de RN: %".format("%s", nom, cont-1));
-                
-            }
+        if(calificaciones.size()!=0){
 
-            if(calificacion.getGrupoVS()!=null){
-                String nom =calificacion.getGrupoVS().getCursos().nombre;
-                int cont =0;
-                for (Calificacion calificacion2 : calificaciones) { 
-                    if(calificacion2.getGrupoVS().getCursos().nombre==nom){
-                        cont++;
+            for (Calificacion calificacion : calificaciones) {
+                if (calificacion.getGrupoP()!=null){
+                    String nom =calificacion.getGrupoP().getCursos().nombre;
+                    int cont =0;
+                    for (Calificacion calificacion2 : calificaciones) { 
+                        if(calificacion2.getGrupoP().getCursos().nombre==nom){
+                            cont++;
+                        }
                     }
+                    System.out.println("En el curso: ");
+                    System.out.println(nom);
+                    System.out.println("Tiene un estado RN: ");
+                    System.out.println(cont-1);
+                    console.readLine("");
                 }
-                System.out.println("En el curso %s tiene un estado de RN: %".format("%s", nom, cont-1));
+                if (calificacion.getGrupoVA()!=null){
+                    String nom =calificacion.getGrupoVA().getCursos().nombre;
+                    int cont =0;
+                    for (Calificacion calificacion2 : calificaciones) { 
+                        if(calificacion2.getGrupoVA().getCursos().nombre==nom){
+                            cont++;
+                        }
+                    }
+                    System.out.println("En el curso: ");
+                    System.out.println(nom);
+                    System.out.println("Tiene un estado RN: ");
+                    System.out.println(cont-1);
+                    console.readLine("");
+                }
+    
+                if(calificacion.getGrupoVS()!=null){
+                    String nom =calificacion.getGrupoVS().getCursos().nombre;
+                    int cont =0;
+                    for (Calificacion calificacion2 : calificaciones) { 
+                        if(calificacion2.getGrupoVS().getCursos().nombre==nom){
+                            cont++;
+                        }
+                    }
+                    System.out.println("En el curso: ");
+                    System.out.println(nom);
+                    System.out.println("Tiene un estado RN: ");
+                    System.out.println(cont-1);                 
+                    console.readLine("");
+                }
                 
             }
-            
+        }else{
+            console.readLine("El estudiante tiene el historial academico en blanco");
         }
         
     }
@@ -493,26 +532,29 @@ public class Coordinador extends Cuenta {
      */
     public static void reporteLevRequisitos(Estudiante est ){
         Ansi.limpiarPantalla();
+        Console console = System.console();
         int contT = 0;
         System.out.println("Listado de levantamientos de requisitos");
-        while (contT < est.getTramites().size()){
-            if ( est.getTramites().get(contT).getClass() == LevRequisitos.class ){
-                ITramites levReq = est.getTramites().get(contT);
-                String estado = "";
-                if (levReq.getEstado() == true)
-                    estado = "Aprobado";
-                if (levReq.getEstado() == false)
-                    estado = "Rechazado";
-                else{
-                    estado = "Pendiente";
+        if(est.getTramites().size()!=0){
+
+            while (contT < est.getTramites().size()){
+                if ( est.getTramites().get(contT).getClass() == LevRequisitos.class ){
+                    ITramites levReq = est.getTramites().get(contT);
+                    String estado = "";
+                    if (levReq.getEstado() == true)
+                        estado = "Aprobado";
+                    if (levReq.getEstado() == false)
+                        estado = "Rechazado";
+                    System.out.println("Curso: "+levReq.getCurso().getNombre()+" Estado: "+estado+" Justificacion: "+levReq.getJustificacion());
+                    console.readLine("--------------");
+                    
                 }
-                System.out.println("Curso: %s \n Estado: %s \n Justificacion: %s".format("%s", levReq.getCurso().getNombre(),estado,levReq.getJustificacion()));
-                System.out.println("--------------");
-                
+                contT++;
             }
-            contT++;
+            System.out.println("-----------------------");
+        }else{
+            console.readLine("No hay Tramites");
         }
-        System.out.println("-----------------------");
 
     }
 
@@ -522,7 +564,7 @@ public class Coordinador extends Cuenta {
     public static void crearTramites(){
         Ansi.limpiarPantalla();
         Console console = System.console();
-        System.out.println("Que tramite decea registrar");
+        System.out.println("Que tramite desea registrar");
         System.out.println("1.Levantamiento de requisitos");
         System.out.println("2.Levantamiento RN");
         System.out.println("3.Salicitud de beca");
@@ -540,12 +582,19 @@ public class Coordinador extends Cuenta {
                 Curso cur =Coordinador.buscarCurso(cod);
                 Boolean estado;
                 String esta = console.readLine("Aprobar tramite? s/n: ");
-                if((esta == "s")||(esta == "S")){
+                if((esta.equals("s"))||(esta.equals("S") )){
                     estado =true;
+                    LevRequisitos nuevoTramite =new LevRequisitos(justEst, estado, cur, new GregorianCalendar(anio,mes,dia), descrip, est);
+                    est.setTramites(nuevoTramite);
+                    Main.tramites.add(nuevoTramite);
                 }else{
                     estado = false;
+                    String justRechazo = console.readLine("Escriba la justificacion de rechazo: ");
+                    LevRequisitos nuevoTramite =new LevRequisitos(justEst, estado, cur, new GregorianCalendar(anio,mes,dia), descrip, est,justRechazo);
+                    est.setTramites(nuevoTramite);
+                    Main.tramites.add(nuevoTramite);
                 }
-                Main.tramites.add(new LevRequisitos(justEst, estado, cur, new GregorianCalendar(anio,mes,dia), descrip, est));
+                
                 break;
             case 2:
                 int ced2 =Integer.parseInt(console.readLine("Digite la carnet del estudiante del tramite: "));
@@ -574,12 +623,14 @@ public class Coordinador extends Cuenta {
                 }
                 Boolean estado2;
                 String esta2 = console.readLine("Aprobar tramite? s/n: ");
-                if((esta2 == "s")||(esta2 == "S")){
+                if((esta2.equals("s"))||(esta2.equals("S") )){
                     estado2 =true;
                 }else{
                     estado2 = false;
                 }
-                Main.tramites.add(new LevRN(cur2, new GregorianCalendar(anio2,mes2,dia2), descrip2, est2, estado2));
+                LevRN nuevoTramite =new LevRN(cur2, new GregorianCalendar(anio2,mes2,dia2), descrip2, est2, estado2);
+                est2.setTramites(nuevoTramite);
+                Main.tramites.add(nuevoTramite);
                 break;
                 }
             case 3:
@@ -596,7 +647,9 @@ public class Coordinador extends Cuenta {
                 int anioPeridoFin = Integer.parseInt(console.readLine("Escriba el año del Fin de periodo: "));
                 int mesPeridoFin = Integer.parseInt(console.readLine("Escriba el mes del Fin de periodo: "));
                 int diaPeridoFin = Integer.parseInt(console.readLine("Escriba el dia del Fin de periodo: "));
-                Main.tramites.add(new SoliBeca(tipoBeca, new GregorianCalendar(anioPeridoInicio,mesPeridoInicio,diaPeridoInicio), new GregorianCalendar(anio3,mes3,dia3), descrip3, est3, new GregorianCalendar(anioPeridoFin,mesPeridoFin,diaPeridoFin)));
+                SoliBeca nuevoTramite = new SoliBeca(tipoBeca, new GregorianCalendar(anioPeridoInicio,mesPeridoInicio,diaPeridoInicio), new GregorianCalendar(anio3,mes3,dia3), descrip3, est3, new GregorianCalendar(anioPeridoFin,mesPeridoFin,diaPeridoFin));
+                est3.setTramites(nuevoTramite);
+                Main.tramites.add(nuevoTramite);
                 break;   
         }
     }

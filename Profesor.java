@@ -57,7 +57,7 @@ public class Profesor extends Cuenta {
     {
         for (Presencial grup: Main.gruposP)
         {
-            if (grup.getId() == id)
+            if (grup.getId().equals(id))
             {
                 
                 return (grup);
@@ -76,7 +76,7 @@ public class Profesor extends Cuenta {
     {
         for (VirtualA grup: Main.gruposVA)
         {
-            if (grup.getId() == id)
+            if (grup.getId().equals(id))
             {
                 
                 return (grup);
@@ -95,7 +95,7 @@ public class Profesor extends Cuenta {
     {
         for (VirtualS grup: Main.gruposVS)
         {
-            if (grup.getId() == id)
+            if (grup.getId().equals(id) )
             {
                 
                 return (grup);
@@ -181,7 +181,7 @@ public class Profesor extends Cuenta {
      */
     public void MenuAsistenciaTutorias(){
         Console console = System.console();
-        System.out.println("1.Grupos de tutorias: ");
+        System.out.println("Grupos de tutorias: ");
         int contP = 0;
         if(this.tutorias.size() == 0){
             System.out.println("------------------");
@@ -204,7 +204,7 @@ public class Profesor extends Cuenta {
                 System.out.println("No se encontro el estudiante ");
             }
             else{
-                Main.profeActual.getTutorias().get(opt).agregarAsistencia(est);
+                Main.profeActual.getTutorias().get(opt-1).agregarAsistencia(est);
             }
             
         } 
@@ -224,49 +224,69 @@ public class Profesor extends Cuenta {
         switch(opt){
             case"1":
                 String idGrupoPre =console.readLine("%s", "Ingrese el id del grupo: ");
-                Presencial grupoPre = profe.buscarGrupoP(idGrupoPre);
-                for (Estudiante est : grupoPre.estudiantes) {
-                    String nom = grupoPre.curso.nombre;
-                    int cont =0;
-                    for (Calificacion calificacion : est.getCalificaciones()) {
-                        if(calificacion.getGrupoP().curso.nombre==nom){
-                            cont++;
+                Presencial grupoPre = Profesor.buscarGrupoP(idGrupoPre);
+                if(grupoPre.estudiantes.size()!=0){
+
+                    for (Estudiante est : grupoPre.estudiantes) {
+                        String nom = grupoPre.curso.nombre;
+                        int cont =0;
+                        if(est.getCalificaciones().size()!=0){
+                            
+                            for (Calificacion calificacion : est.getCalificaciones()) {
+                                if(calificacion.getGrupoP().curso.nombre==nom){
+                                    cont++;
+                                }
+                            }
+                            System.out.println(est.getNombre()+"RN: "+ (cont-1));
                         }
-                    }
-                    System.out.println(est.getNombre()+"RN: "+ (cont-1));
-                } 
+                    } 
+                }else{
+                    console.readLine("El grupo no tiene estudiantes");
+                }
+                break;
             case"2":
                 String idGrupoVA =console.readLine("%s", "Ingrese el id del grupo: ");
-                Presencial grupoVA = profe.buscarGrupoP(idGrupoVA);
-                for (Estudiante est : grupoVA.estudiantes) {
-                    String nom = grupoVA.curso.nombre;
-                    int cont =0;
-                    for (Calificacion calificacion : est.getCalificaciones()) {
-                        if(calificacion.getGrupoVA().curso.nombre==nom){
-                            cont++;
+                Presencial grupoVA = Profesor.buscarGrupoP(idGrupoVA);
+                if(grupoVA.estudiantes.size()!=0){
+                    for (Estudiante est : grupoVA.estudiantes) {
+                        String nom = grupoVA.curso.nombre;
+                        int cont =0;
+                        if(est.getCalificaciones().size()!=0){
+                            for (Calificacion calificacion : est.getCalificaciones()) {
+                                if(calificacion.getGrupoVA().curso.nombre==nom){
+                                    cont++;
+                                }
+                            }
+                            System.out.println(est.getNombre()+"RN: "+ (cont-1));
                         }
                     }
-                    System.out.println(est.getNombre()+"RN: "+ (cont-1));
                 }
+                break;
             case"3":
                 String idGrupoVS =console.readLine("%s", "Ingrese el id del grupo: ");
-                Presencial grupoVS = profe.buscarGrupoP(idGrupoVS);
-                for (Estudiante est : grupoVS.estudiantes) {
-                    String nom = grupoVS.curso.nombre;
-                    int cont =0;
-                    for (Calificacion calificacion : est.getCalificaciones()) {
-                        if(calificacion.getGrupoVS().curso.nombre==nom){
-                            cont++;
+                Presencial grupoVS = Profesor.buscarGrupoP(idGrupoVS);
+                if(grupoVS.estudiantes.size()!=0){
+                    for (Estudiante est : grupoVS.estudiantes) {
+                        String nom = grupoVS.curso.nombre;
+                        int cont =0;
+                        if(est.getCalificaciones().size()!=0){    
+                            for (Calificacion calificacion : est.getCalificaciones()) {
+                                if(calificacion.getGrupoVS().curso.nombre==nom){
+                                    cont++;
+                                }
+                            }
+                            System.out.println(est.getNombre()+"RN: "+ (cont-1));
                         }
                     }
-                    System.out.println(est.getNombre()+"RN: "+ (cont-1));
                 }
+                break;
         }
     }
     /**
      * Lista los grupos del profesor, dependiendo del grupo lista los estudiantes quienes hicieron un levantamiento para poder estar en ese curso
      */
     public static void reporteLevRequisitosProfe(){
+        Console console = System.console();
         System.out.println("Grupos:");
         Coordinador.ImprimirCursos(Main.profeActual.getGruposP(), Main.profeActual.getGruposVS(), Main.profeActual.getGruposVA());
         int opt =Integer.parseInt(Main.console.readLine("%s","opcion: "));
@@ -288,7 +308,7 @@ public class Profesor extends Cuenta {
                                     for(Curso requisito: Main.profeActual.getGruposP().get(cont).curso.requisitos){ // recorre los requisitos que tenga el curso del grupo
                                         if (levReq.getCurso() == requisito){ // compara si el curso levantado es alguno de los requisitos del curso del grupo 
                                             
-                                            System.out.println("Curso: %s \n Justificacion: %s".format("%s", levReq.getCurso().getNombre(),levReq.getJustificacion()));
+                                            console.readLine("Curso:"+levReq.getCurso().getNombre()+" Justificacion: "+levReq.getJustificacion());
                                         }
                                     }
                                 }
@@ -298,7 +318,7 @@ public class Profesor extends Cuenta {
                         }
                         return;
                     }else{
-                        System.out.println("Curso sin requisitos");
+                        console.readLine("Curso sin requisitos");
                         return;
                     }
                 }
@@ -322,7 +342,7 @@ public class Profesor extends Cuenta {
                                     for(Curso requisito: Main.profeActual.getGruposVA().get(cont).curso.requisitos){ //recorre todos los requisitos del curso del grupo
                                         if (levReq.getCurso() == requisito){ // si el curso a levantar es alguno de los requisitos del grupo,entra
                                             
-                                            System.out.println("Curso: %s \n Justificacion: %s".format("%s", levReq.getCurso().getNombre(),levReq.getJustificacion()));
+                                            console.readLine("Curso:"+levReq.getCurso().getNombre()+" Justificacion: "+levReq.getJustificacion());
                                         }
                                     }
                                 }
@@ -332,7 +352,7 @@ public class Profesor extends Cuenta {
                         }
                         return;
                     }else{
-                        System.out.println("Curso sin requisitos");
+                        console.readLine("Curso sin requisitos");
                         return;
                     }
                 }
@@ -357,7 +377,7 @@ public class Profesor extends Cuenta {
                                     for(Curso requisito: Main.profeActual.getGruposVS().get(cont).curso.requisitos){// recorre los requisitos del curso del grupo
                                         if (levReq.getCurso() == requisito){//verifica si el requisito levantado es alguno de los requisitos del grupo
                                             
-                                            System.out.println("Curso: %s \n Justificacion: %s".format("%s", levReq.getCurso().getNombre(),levReq.getJustificacion()));
+                                            console.readLine("Curso:"+levReq.getCurso().getNombre()+" Justificacion: "+levReq.getJustificacion());
                                         }
                                     }
                                 }
@@ -367,7 +387,7 @@ public class Profesor extends Cuenta {
                         }
                         return;
                     }else{
-                        System.out.println("Curso sin requisitos");
+                        console.readLine("Curso sin requisitos");
                         return;
                     }
                 }

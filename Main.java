@@ -28,6 +28,7 @@ public class Main{
         cursos.add(new Curso("123", "POO", Byte.parseByte("4") , Byte.parseByte("4")));
         cursos.add(new Curso("321", "Estruct", Byte.parseByte("3") , Byte.parseByte("5")));
         cursos.add(new Curso("456", "Arqui", Byte.parseByte("2") , Byte.parseByte("6")));
+        cursos.get(0).setRequisitos(cursos.get(2));
         //Coordinadores:
         coordinadores.add(new Coordinador("Jeison", "blanco", "rojas", "8128314","", "", "admin", "admin"));
         //Profesores:
@@ -103,23 +104,35 @@ public class Main{
     public static void MenuProfesor()
     {
         Ansi.limpiarPantalla();
-        int carne =Integer.parseInt(console.readLine("Ingrese el carnet del estudiante que quiere calificar: ")); 
-        Estudiante est =Coordinador.buscarEstudiante(carne);
+       
         System.out.println("1.Tutorias");
         System.out.println("2.Crear acompañamiento");
         System.out.println("3.Crear Calificacion");
+        System.out.println("4.Reporte RN");
+        System.out.println("5.Reporte levantamiento Requisitos");
+        System.out.println("6.Salir");
         
         String opt =console.readLine("%s", "Seleccione alguna de las opciones: ");
         switch(opt){
             case"1":
                 MenuTutorias();
-                break;
+                MenuProfesor();
             case"2":
                 acompañamientos.add(Profesor.crearAcompañamiento());
-                break;
+                MenuProfesor();
             case"3":
+                int carne =Integer.parseInt(console.readLine("Ingrese el carnet del estudiante que quiere calificar: ")); 
+                Estudiante est =Coordinador.buscarEstudiante(carne);
                 est.setCalificaciones(Profesor.crearCalificacion(est));
-                break;
+                MenuProfesor();
+            case"4":
+                Profesor.reporteRNP(profeActual);
+                MenuProfesor();
+            case"5":
+                Profesor.reporteLevRequisitosProfe();
+                MenuProfesor();
+            case"6":
+                menu();
             default:
                 Ansi.limpiarPantalla();
                 System.out.print("\u001B[31m");
@@ -140,7 +153,11 @@ public class Main{
         System.out.println("3.Matricular estudiante");
         System.out.println("4.Crear Curso");
         System.out.println("5.Historial academico estudiante");
-        System.out.println("6.Salir");
+        System.out.println("6.Registro Tramites");
+        System.out.println("7.Reporte RN");
+        System.out.println("8.Reporte levantamiento Requisitos");
+        System.out.println("9.Modificar Curso");
+        System.out.println("10.Salir");
         
         String opt = console.readLine("%s", "Seleccione alguna de las opciones: ");
         switch(opt){
@@ -167,6 +184,20 @@ public class Main{
                 MenuCoordinador();
                 break;
             case "6":
+                Coordinador.crearTramites();
+                MenuCoordinador();
+            case "7":
+                int carneRN =Integer.parseInt(console.readLine("Digite el carnet del estudiante: ")); 
+                Coordinador.reporteRN(Coordinador.buscarEstudiante(carneRN));
+                MenuCoordinador();
+            case "8":
+                int carneLR =Integer.parseInt(console.readLine("Digite el carnet del estudiante: ")); 
+                Coordinador.reporteLevRequisitos(Coordinador.buscarEstudiante(carneLR));
+                MenuCoordinador();
+            case "9":
+                String cod =console.readLine("Digite el codigo del curso: "); 
+                Coordinador.modificarCurso(Coordinador.buscarCurso(cod));
+            case "10":
                 menu();
                 break;
             default:
