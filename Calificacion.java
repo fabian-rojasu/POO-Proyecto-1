@@ -1,6 +1,7 @@
-
-
-
+/**
+* Clase calificacion para asignarle un puntaje a un estudiante en algun grupo
+*
+*/
 public class Calificacion{
     private float nota;
     private Estudiante estudiante;

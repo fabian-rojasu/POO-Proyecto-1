@@ -51,15 +51,21 @@ class LevRequisitos extends Tramites implements ITramites {
     public void setJustificacionRechazo(String justificacionRechazo) {
         this.justificacionRechazo = justificacionRechazo;
     }
-    @Override
-    public void asociar() {
-        
-    }
     public String getJustificacionEst() {
         return justificacionEst;
     }
     public String getJustificacionRechazo() {
         return justificacionRechazo;
+    }
+    @Override
+    public Estudiante gEstudiante() {
+       
+        return estudiante;
+    }
+    @Override
+    public Curso getCurso() {
+        // TODO Auto-generated method stub
+        return cursoLev;
     }
 }
 /**
@@ -73,7 +79,6 @@ class LevRN extends Tramites implements ITramites{
     private boolean estado;
     private Curso cursoRN;
     private ArrayList<Curso> cursosPosiblesMatricular;
-
     public LevRN( Curso cursorn,Calendar fecha,String descripcion, Estudiante est,boolean estado){
         super(fecha,descripcion,est);
         this.estado = estado;
@@ -90,10 +95,20 @@ class LevRN extends Tramites implements ITramites{
     public ArrayList<Curso> getCursosPosiblesMatricular() {
         return cursosPosiblesMatricular;
     }
-    @Override
-    public void asociar() {
+        @Override
+    public Estudiante gEstudiante() {
         // TODO Auto-generated method stub
-        
+        return estudiante;
+    }
+    @Override
+    public Curso getCurso() {
+        // TODO Auto-generated method stub
+        return cursoRN;
+    }
+    @Override
+    public String getJustificacion() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }
@@ -123,21 +138,43 @@ class SoliBeca extends Tramites implements ITramites{
     public Calendar getPeriodoFin() {
         return periodoFin;
     }
+
+    //Metodos de la interfaz ITramites
     @Override
-    public void asociar() {
+    public Estudiante gEstudiante() {
         // TODO Auto-generated method stub
-        
+        return estudiante;
+    }
+    @Override
+    public Curso getCurso() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    @Override
+    public String getJustificacion() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    @Override
+    public boolean getEstado() {
+        // TODO Auto-generated method stub
+        return false;
     }
 }
 
+/**
+ * Clase Acompañamiento con sus atributos y metodos respectivos
+ */
 class Acompañamiento extends Tramites {
     private String tipoReporte;
 
+    //metodo constructor de la clase
     public Acompañamiento( String tipoReporte,Calendar fecha,String descripcion, Estudiante est){
         super(fecha,descripcion,est);
         this.tipoReporte=tipoReporte;
    }
    
+    //Metodo Get
     public String getTipoReporte() {
         return tipoReporte;
     }

@@ -2,9 +2,12 @@ import java.util.ArrayList;
 import java.io.Console;
 import java.util.GregorianCalendar;
 import java.util.Calendar;
-import java.util.Collections;
 
 
+/**
+ * Clase Coordinador donde existen todos los metodos y atributos relacionados a una instancia coordinador
+ * 
+ */ 
 public class Coordinador extends Cuenta {
     static ArrayList<String> listaId;
     
@@ -15,55 +18,51 @@ public class Coordinador extends Cuenta {
         
     }
 
-    // metodos para buscar por nombre 
-    public static Profesor buscarProfesor(String nom)
-    {
-        for (Profesor prof: Main.profesores)
-        {
-            if (prof.nombre == nom)
-            {
+    //*****Metodos Buscar*****
+
+    //metodo para buscar un profesor por nombre 
+    public static Profesor buscarProfesor(String nom){
+        for (Profesor prof: Main.profesores){
+            if (prof.nombre == nom){
                 return (prof);
             }
         }
         return null;
     }
 
-    public static Coordinador buscarCoordinador(String nom)
-    {
-        for (Coordinador coordi: Main.coordinadores)
-        {
-            if (coordi.nombre == nom)
-            {
+    //metodo para buscar un coordinador por nombre 
+    public static Coordinador buscarCoordinador(String nom){
+        for (Coordinador coordi: Main.coordinadores){
+            if (coordi.nombre == nom){
                 return (coordi);
             }
         }
         return null;
     }
 
-    public static Curso buscarCurso(String cod)
-    {
-        for (Curso cur: Main.cursos)
-        {
-            if (cur.codigo == cod)
-            {
+    //metodo para buscar un curso por codigo
+    public static Curso buscarCurso(String cod){
+        for (Curso cur: Main.cursos){
+            if (cur.codigo == cod){
                 return (cur);
             }
         }
         return null;
     }
 
-    public static Estudiante buscarEstudiante(int carnet)
-    {
-        for (Estudiante est: Main.estudiantes)
-        {
-            if (est.getCarnet() == carnet)
-            {
+    //metodo para buscar estudiante por carnet
+    public static Estudiante buscarEstudiante(int carnet){
+        for (Estudiante est: Main.estudiantes){
+            if (est.getCarnet() == carnet){
                 return (est);
             }
         }
         return null;
     }
 
+    /**
+     * Metodo imprimir cursos, que muestra tanto los presenciales, virtuales asincornicos y virtuales sincronicos
+     */
     static int contGrupos = 0;
     public static void ImprimirCursos(ArrayList<Presencial> gruposP,ArrayList<VirtualS> gruposVS,ArrayList<VirtualA> gruposVA){
         contGrupos = 0;
@@ -107,7 +106,11 @@ public class Coordinador extends Cuenta {
         }
         System.out.println((contGrupos+1)+".volver");
     }
-    // funcion para asociar un estudiante a un grupo de curso
+    
+    /**
+    * funcion para asociar un estudiante a un grupo de curso
+    * Busca al estudiante y luego llama a la funcion de imprimirCursos
+    */ 
     public static void asociarEst(){   
         listaId = new ArrayList<>();
         Ansi.limpiarPantalla();
@@ -160,7 +163,10 @@ public class Coordinador extends Cuenta {
     }
 
     
-    //Metodos Modificar
+    /**
+     * Metodo que recibe un curso y lo modifica
+     * @param curso
+     */
     public void modificarCurso(Curso curso) {
         Console console = System.console();
         System.out.println("1.Codigo");
@@ -227,7 +233,7 @@ public class Coordinador extends Cuenta {
     }
 
 
-    //Metodos Crear
+    //*****Metodos Crear*****
     public static void CrearProfesor(){
             Ansi.limpiarPantalla();
             Console console = System.console();
@@ -261,6 +267,7 @@ public class Coordinador extends Cuenta {
         Main.estudiantes.add(new Estudiante(nombre, apellido1, apellido2, carnet, fechaNacimiento, edad, genero, residencia));
     }
 
+    //Menu donde se selcciona que tipo de grupo crear entre las tres opciones que se dispone
     public static void MenuGrupo(){
         Ansi.limpiarPantalla();
         Console console = System.console();
@@ -313,7 +320,6 @@ public class Coordinador extends Cuenta {
         int seleccionC = Integer.parseInt(console.readLine("%s", "Seleccione el curso del grupo: "))-1;
         Main.gruposVA.add(new VirtualA(numGrupo, id, Main.profesores.get(seleccion), medio,Main.cursos.get(seleccionC)));
     }
-
 
     public static void CrearGrupoVirtualS(){
         Ansi.limpiarPantalla();
@@ -389,6 +395,9 @@ public class Coordinador extends Cuenta {
         }
     }
 
+    /**
+     * Metodo que muestra el registro de calificaciones que tiene asisiado dicho estudiante 
+     */
     public static void Historial_academico(){
         
         Ansi.limpiarPantalla();
@@ -432,7 +441,10 @@ public class Coordinador extends Cuenta {
         System.out.println("Ponderado: "+ponderado);
     }
 
-
+    /**
+     * Metodo que selecciona un estudiante y crea cualquier tipo de reporte de los tres que hay
+     * @param est
+     */
     public static void reporteRN(Estudiante est){//Probar
         ArrayList<Calificacion> calificaciones= est.getCalificaciones();
         for (Calificacion calificacion : calificaciones) {
@@ -474,16 +486,39 @@ public class Coordinador extends Cuenta {
         }
         
     }
+    
     /**
+    Metodo que crea un reporte sobre los tramites de levantamiento de requisitos de un estudiante especifico
     Pedir en menu el carnet de estudiante y validar que exista
      */
     public static void reporteLevRequisitos(Estudiante est ){
         Ansi.limpiarPantalla();
-        if (Main.tramites.get == )
-        
+        int contT = 0;
+        System.out.println("Listado de levantamientos de requisitos");
+        while (contT < est.getTramites().size()){
+            if ( est.getTramites().get(contT).getClass() == LevRequisitos.class ){
+                ITramites levReq = est.getTramites().get(contT);
+                String estado = "";
+                if (levReq.getEstado() == true)
+                    estado = "Aprobado";
+                if (levReq.getEstado() == false)
+                    estado = "Rechazado";
+                else{
+                    estado = "Pendiente";
+                }
+                System.out.println("Curso: %s \n Estado: %s \n Justificacion: %s".format("%s", levReq.getCurso().getNombre(),estado,levReq.getJustificacion()));
+                System.out.println("--------------");
+                
+            }
+            contT++;
+        }
+        System.out.println("-----------------------");
 
     }
 
+    /**
+     * Metodo que crea un tramite de los tres tipos de tramites que existen: Levantamiento requisitos, levantamiento RN, solicitud de beca
+     */
     public static void crearTramites(){
         Ansi.limpiarPantalla();
         Console console = System.console();

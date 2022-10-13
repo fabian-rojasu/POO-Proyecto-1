@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 /**
  * Clase donde se describe los datos del estudiante TEC
- * @author Fabian Rojas, Geancarlo Oviedo, Jeison Blanco
  */
 public class Estudiante {
+    //Atributos
     private String nombre;
     private String apellido1;
     private String apellido2;
