@@ -1,30 +1,28 @@
+
 import java.util.ArrayList;
+
 /**
  * Clase donde se describe los datos del Curso impartido en el TEC
  * @author Fabian Rojas, Geancarlo Oviedo, Jeison Blanco
  */
 public class Curso {
-    private String codigo;
-    private String nombre;
-    private byte creditos;
-    private byte cantidadHoras;
-    private ArrayList<Curso> requisitos;
-    private ArrayList<Curso> correquisitos;
-    private float calificacion;
-    private String RN;
+    protected String codigo;
+    protected String nombre;
+    protected byte creditos;
+    protected byte cantidadHoras;
+    protected ArrayList<Curso> requisitos;
+    protected ArrayList<Curso> correquisitos;
+  
 
     //Metodo constructor de la clase curso
-    public Curso(String codigo,String nombre,byte creditos,byte cantidadHoras, float calificacion, String RN){
+    public Curso(String codigo,String nombre,byte creditos,byte cantidadHoras){
         this.codigo=codigo;
         this.nombre=nombre;
         this.creditos=creditos;
         this.cantidadHoras=cantidadHoras;
         this.requisitos=new ArrayList<Curso>();
         this.correquisitos=new ArrayList<Curso>();
-        this.calificacion=calificacion;
-        this.RN=RN;
     }
-
     //Metodos Sets
     public void setCodigo(String codigo) {
         this.codigo = codigo;
@@ -44,12 +42,7 @@ public class Curso {
     public void setCorrequisitos (Curso curso){
         correquisitos.add(curso);
     }
-    public void setCalificacion(float calificacion) {
-        this.calificacion = calificacion;
-    }
-    public void setRN(String rN) {
-        RN = rN;
-    }
+    
 
     //Metodos Gets
     public String getCodigo() {
@@ -70,10 +63,8 @@ public class Curso {
     public ArrayList<Curso> getCorrequisitos() {
         return correquisitos;
     }
-    public float getCalificacion() {
-        return calificacion;
-    }
-    public String getRN() {
-        return RN;
-    }
+    
+
 }
+
+
